@@ -1,45 +1,50 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Cinemachine.CinemachineImpulseManager.ImpulseEvent;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(GroundCheckController))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player movement stats:")]
-    [SerializeField] private float _moveSpeed;
+    [SerializeField, Range(1, 100)] private float _moveSpeed;
+    [SerializeField] private Vector2 _moveDirection;
     //
     [SerializeField] private float _buttonJumpTime;
-    [SerializeField] private float _jumpAmount;
+    [SerializeField, Range(1, 100)] private float _jumpAmount;
     [SerializeField] private float _jumpTime;
     [SerializeField] private bool _jumping;
     //
-    [SerializeField] private float _buttonShiftTime;
-    [SerializeField] private float _shiftAmount;
-    [SerializeField] private float _shiftTime;
-    [SerializeField] private bool _shifting;
+    [SerializeField, Range(0, 10000)] private float _shiftAmount;
+    [SerializeField] private bool _shiftAllowed;
+    [SerializeField, Range(0, 30)] private float cooldownShift;
     //
 
-
-
-    [Header("Gravity handling:")]
+    [Header("ACTIVE SKILLS:")]
+    [SerializeField] private bool _activeJump;
+    [SerializeField] private bool _activeShift;
 
 
     [Header("Player components:")]
-    private PlayerController _playerController;
-    private InputManager _inputManager;
+    private GroundCheckController _groundCheckController;
     private Rigidbody2D _rigidBody2D;
+
+    private InputManager _inputManager;
+
 
     private void Awake()
     {
-        _playerController = GetComponent<PlayerController>();
+        _groundCheckController= GetComponent<GroundCheckController>();
         _inputManager = GetComponent<InputManager>();
-
         _rigidBody2D= GetComponent<Rigidbody2D>();
+
     }
 
     private void OnEnable()
     {
-
+        _shiftAllowed = true;
     }
 
     private void Start()
@@ -47,19 +52,22 @@ public class PlayerMovement : MonoBehaviour
         _inputManager.inputController.Player.Jump.started += context => OnJumpStart();
         _inputManager.inputController.Player.Jump.canceled += context => OnJumpCanceled();
 
-        //_inputManager.inputController.Player.Shift.performed += context => OnShift();
-        _inputManager.inputController.Player.Shift.started += context => OnShiftStart();
-        _inputManager.inputController.Player.Shift.canceled += context => OnShiftCanceled();
+        _inputManager.inputController.Player.Shift.performed += context => StartCoroutine(Shift());
     }
 
     private void Update()
     {
+        _moveDirection = _inputManager.inputController.Player.Move.ReadValue<Vector2>();
+        Move(_moveDirection);
     }
 
     private void FixedUpdate()
     {
-        Vector2 moveDirection = _inputManager.inputController.Player.Move.ReadValue<Vector2>();
-        Move(moveDirection);
+
+        Move(_moveDirection);
+        if (_moveDirection.x < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
+        if (_moveDirection.x > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
+
 
         if (_jumping)
         {
@@ -71,28 +79,19 @@ public class PlayerMovement : MonoBehaviour
                 _jumping = false;
             }
         }
-
-        if (_shifting)
-        {
-            _rigidBody2D.velocity = new Vector2(_shiftAmount, _rigidBody2D.velocity.y);
-            _shiftTime += Time.deltaTime;
-
-            if (_shiftTime > _buttonShiftTime)
-            {
-                _shifting = false;
-            }
-        }
     }
 
+    //////////////////////////
     private void Move(Vector2 directionMove)
     {
-        Vector3 direction = new Vector3(directionMove.x, 0, 0);
-        transform.position += direction * _moveSpeed * Time.deltaTime;
+        _rigidBody2D.velocity = new Vector2(directionMove.x * _moveSpeed, _rigidBody2D.velocity.y);
     }
+    //////////////////////////
 
+    //////////////////////////
     private void OnJumpStart()
     {
-        if (_playerController.isGrounded)
+        if (_groundCheckController.isGrounded && _activeJump)
         {
             Debug.Log("StartJump!");
             _jumping = true;
@@ -102,23 +101,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpCanceled()
     {
-        Debug.Log("StopJump!");
-        _jumping = false;
-    }
-
-    private void OnShiftStart()
-    {
-        if (_playerController.isGrounded)
+        if (_activeJump)
         {
-            Debug.Log("StartShift!");
-            _shifting = true;
-            _shiftTime = 0;
+            Debug.Log("StopJump!");
+            _jumping = false;
         }
     }
+    //////////////////////////
 
-    private void OnShiftCanceled()
+    //////////////////////////
+
+    private IEnumerator Shift()
     {
-        Debug.Log("StopShift!");
-        _shifting = false;
+        if (_shiftAllowed && _activeShift)
+        {
+            _rigidBody2D.AddForce(_moveDirection * _shiftAmount, ForceMode2D.Force);
+            Debug.Log("Shift!");
+            _shiftAllowed = false;
+            yield return new WaitForSeconds(cooldownShift);
+            _shiftAllowed = true;
+        }
     }
+    //////////////////////////
 }
