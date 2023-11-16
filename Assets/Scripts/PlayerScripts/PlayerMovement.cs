@@ -5,7 +5,7 @@ using static Cinemachine.CinemachineImpulseManager.ImpulseEvent;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(InputManager))]
-[RequireComponent(typeof(GroundCheckController))]
+
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player movement stats:")]
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Player components:")]
-    private GroundCheckController _groundCheckController;
+    [SerializeField] private GroundCheckController _groundCheckController;
     private Rigidbody2D _rigidBody2D;
 
     private InputManager _inputManager;
@@ -36,10 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        _groundCheckController= GetComponent<GroundCheckController>();
         _inputManager = GetComponent<InputManager>();
         _rigidBody2D= GetComponent<Rigidbody2D>();
-
     }
 
     private void OnEnable()
@@ -58,17 +56,33 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _moveDirection = _inputManager.inputController.Player.Move.ReadValue<Vector2>();
-        Move(_moveDirection);
     }
 
     private void FixedUpdate()
     {
-
         Move(_moveDirection);
+        Flip();
+        Jump();
+    }
+
+    //////////////////////////
+    private void Move(Vector2 directionMove)
+    {
+        _rigidBody2D.velocity = new Vector2(directionMove.x * _moveSpeed, _rigidBody2D.velocity.y);
+    }
+    //////////////////////////
+
+    //////////////////////////
+    private void Flip()
+    {
         if (_moveDirection.x < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
         if (_moveDirection.x > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+    //////////////////////////
 
-
+    //////////////////////////
+    private void Jump()
+    {
         if (_jumping)
         {
             _rigidBody2D.velocity = new Vector2(_rigidBody2D.velocity.x, _jumpAmount);
@@ -81,14 +95,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //////////////////////////
-    private void Move(Vector2 directionMove)
-    {
-        _rigidBody2D.velocity = new Vector2(directionMove.x * _moveSpeed, _rigidBody2D.velocity.y);
-    }
-    //////////////////////////
-
-    //////////////////////////
     private void OnJumpStart()
     {
         if (_groundCheckController.isGrounded && _activeJump)
