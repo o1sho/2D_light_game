@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using static Cinemachine.CinemachineImpulseManager.ImpulseEvent;
 
@@ -12,12 +13,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(1, 100)] private float _moveSpeed;
     private Vector2 _moveDirection;
 
-    [Header("JUMP SETTINGS:")]
-    [SerializeField] private float _buttonJumpTime;
-    [SerializeField, Range(1, 100)] private float _jumpPower;
-    [SerializeField] private float _jumpTime;
-    [SerializeField] private bool _jumping;
-
     [Header("DASH SETTINGS:")]
     private bool _canDash = true;
     private bool _isDashing;
@@ -25,12 +20,31 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(0, 1)] private float _dashingTime;
     [SerializeField, Range(0, 20)] private float _dashingCooldown;
 
+    [Header("JUMP SETTINGS:")]
+    [SerializeField] private float _buttonJumpTime;
+    [SerializeField, Range(1, 100)] private float _jumpPower;
+    [SerializeField] private float _jumpTime;
+    [SerializeField] private bool _jumping;
+
+    [Header("WALL SLIDE & WALL JUMP SETTINGS:")]
+    [SerializeField] private TouchCheckController _wallCheckController;
+    private bool _isWallSliding;
+    [SerializeField] private float _wallSlidingSpeed;
+    private bool _isWallJumping;
+    private float _wallJumpingDirection;
+    [SerializeField, Range(0, 1)] private float _wallJumpingTime;
+    [SerializeField, Range(0, 1)] private float _wallJumpingDuration;
+    [SerializeField] private Vector2 _wallJumpingPower;
+
+
     [Header("ACTIVE SKILLS:")]
     [SerializeField] private bool _activeJump;
-    [SerializeField] private bool _activeShift;
+    [SerializeField] private bool _activeDash;
+    [SerializeField] private bool _activeWallSlide;
+    [SerializeField] private bool _activeWallJump;
 
     [Header("Player components:")]
-    [SerializeField] private GroundCheckController _groundCheckController;
+    [SerializeField] private TouchCheckController _groundCheckController;
     private Rigidbody2D _rigidBody2D;
     [SerializeField] private TrailRenderer _trailRenderer;
 
@@ -54,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
         _inputManager.inputController.Player.Jump.canceled += context => OnJumpCanceled();
 
         _inputManager.inputController.Player.Dash.performed += context => StartCoroutine(Dash());
+
+        _inputManager.inputController.Player.Jump.performed += context => StartCoroutine(WallJump());
     }
 
     private void Update()
@@ -65,9 +81,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isDashing) return;
 
-        Move(_moveDirection);
-        Flip();
+        //Move(_moveDirection);
+        //Flip();
         Jump();
+        WallSlide();    
+        WallJump();
+
+        if (!_isWallJumping) Flip();
+        if (!_isWallJumping) Move(_moveDirection);
     }
 
     //////////////////////////
@@ -102,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpStart()
     {
-        if (_groundCheckController.isGrounded && _activeJump)
+        if (_groundCheckController.isTouched && _activeJump)
         {
             Debug.Log("StartJump!");
             _jumping = true;
@@ -121,10 +142,9 @@ public class PlayerMovement : MonoBehaviour
     //////////////////////////
 
     //////////////////////////
-
     private IEnumerator Dash()
     {
-        if (_moveDirection.x != 0 && _activeShift && _canDash)
+        if (_moveDirection.x != 0 && _activeDash && _canDash && !_isWallSliding)
         {
             _canDash = false;
             _isDashing = true;
@@ -139,6 +159,36 @@ public class PlayerMovement : MonoBehaviour
             _isDashing = false;
             yield return new WaitForSeconds(_dashingCooldown);
             _canDash = true;
+        }
+    }
+    //////////////////////////
+
+    //////////////////////////
+    private void WallSlide()
+    {
+        if (_wallCheckController.isTouched && !_groundCheckController.isTouched && _activeWallSlide)
+        {
+            _isWallSliding = true;
+            _rigidBody2D.velocity = new Vector2(_rigidBody2D.velocity.x, Mathf.Clamp(_rigidBody2D.velocity.y, - _wallSlidingSpeed, float.MaxValue));
+        }
+        else
+        {
+            _isWallSliding = false;
+        }
+    }
+
+    private IEnumerator WallJump()
+    {
+        if (_activeWallJump && _isWallSliding && _moveDirection.x != 0)
+        {
+            _isWallJumping = true;
+            _wallJumpingDirection = -_moveDirection.x;
+            if (_wallJumpingDirection > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
+            if (_wallJumpingDirection < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
+
+            _rigidBody2D.velocity = new Vector2(_wallJumpingDirection * _wallJumpingPower.x, _wallJumpingPower.y);
+            yield return new WaitForSeconds(_wallJumpingDuration);
+            _isWallJumping = false;
         }
     }
     //////////////////////////
