@@ -10,26 +10,29 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player movement stats:")]
     [SerializeField, Range(1, 100)] private float _moveSpeed;
-    [SerializeField] private Vector2 _moveDirection;
-    //
+    private Vector2 _moveDirection;
+
+    [Header("JUMP SETTINGS:")]
     [SerializeField] private float _buttonJumpTime;
-    [SerializeField, Range(1, 100)] private float _jumpAmount;
+    [SerializeField, Range(1, 100)] private float _jumpPower;
     [SerializeField] private float _jumpTime;
     [SerializeField] private bool _jumping;
-    //
-    [SerializeField, Range(0, 10000)] private float _shiftAmount;
-    [SerializeField] private bool _shiftAllowed;
-    [SerializeField, Range(0, 30)] private float cooldownShift;
-    //
+
+    [Header("DASH SETTINGS:")]
+    private bool _canDash = true;
+    private bool _isDashing;
+    [SerializeField] private float _dashingPower;
+    [SerializeField, Range(0, 1)] private float _dashingTime;
+    [SerializeField, Range(0, 20)] private float _dashingCooldown;
 
     [Header("ACTIVE SKILLS:")]
     [SerializeField] private bool _activeJump;
     [SerializeField] private bool _activeShift;
 
-
     [Header("Player components:")]
     [SerializeField] private GroundCheckController _groundCheckController;
     private Rigidbody2D _rigidBody2D;
+    [SerializeField] private TrailRenderer _trailRenderer;
 
     private InputManager _inputManager;
 
@@ -38,11 +41,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _inputManager = GetComponent<InputManager>();
         _rigidBody2D= GetComponent<Rigidbody2D>();
+        _trailRenderer = GetComponent<TrailRenderer>();
     }
 
     private void OnEnable()
     {
-        _shiftAllowed = true;
     }
 
     private void Start()
@@ -50,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         _inputManager.inputController.Player.Jump.started += context => OnJumpStart();
         _inputManager.inputController.Player.Jump.canceled += context => OnJumpCanceled();
 
-        _inputManager.inputController.Player.Shift.performed += context => StartCoroutine(Shift());
+        _inputManager.inputController.Player.Dash.performed += context => StartCoroutine(Dash());
     }
 
     private void Update()
@@ -60,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (_isDashing) return;
+
         Move(_moveDirection);
         Flip();
         Jump();
@@ -85,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_jumping)
         {
-            _rigidBody2D.velocity = new Vector2(_rigidBody2D.velocity.x, _jumpAmount);
+            _rigidBody2D.velocity = new Vector2(_rigidBody2D.velocity.x, _jumpPower);
             _jumpTime += Time.deltaTime;
 
             if (_jumpTime > _buttonJumpTime)
@@ -117,15 +122,23 @@ public class PlayerMovement : MonoBehaviour
 
     //////////////////////////
 
-    private IEnumerator Shift()
+    private IEnumerator Dash()
     {
-        if (_shiftAllowed && _activeShift)
+        if (_moveDirection.x != 0 && _activeShift && _canDash)
         {
-            _rigidBody2D.AddForce(_moveDirection * _shiftAmount, ForceMode2D.Force);
-            Debug.Log("Shift!");
-            _shiftAllowed = false;
-            yield return new WaitForSeconds(cooldownShift);
-            _shiftAllowed = true;
+            _canDash = false;
+            _isDashing = true;
+            float originalGravity = _rigidBody2D.gravityScale;
+            _rigidBody2D.gravityScale = 0f;
+            //_rigidBody2D.AddForce(_moveDirection * _dashingPower, ForceMode2D.Force);
+            _rigidBody2D.velocity = new Vector2(_moveDirection.x * _dashingPower, 0f);
+            _trailRenderer.emitting = true;
+            yield return new WaitForSeconds(_dashingTime);
+            _trailRenderer.emitting = false;
+            _rigidBody2D.gravityScale = originalGravity;
+            _isDashing = false;
+            yield return new WaitForSeconds(_dashingCooldown);
+            _canDash = true;
         }
     }
     //////////////////////////

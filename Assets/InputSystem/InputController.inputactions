@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shift",
+                    "name": "Dash",
                     "type": "Button",
                     "id": "d2d9a2c7-729a-47bd-b0ec-1c168e5ebfb4",
                     "expectedControlType": "Button",
@@ -213,7 +213,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + Mouse",
-                    "action": "Shift",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
