@@ -179,10 +179,10 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator WallJump()
     {
-        if (_activeWallJump && _isWallSliding && _moveDirection.x != 0)
+        if (_activeWallJump && _isWallSliding && _moveDirection.x == 0)
         {
             _isWallJumping = true;
-            _wallJumpingDirection = -_moveDirection.x;
+            _wallJumpingDirection = transform.rotation.y == 0 ? -1 : 1;
             if (_wallJumpingDirection > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
             if (_wallJumpingDirection < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
 
