@@ -179,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator WallJump()
     {
-        if (_activeWallJump && _isWallSliding && _moveDirection.x == 0)
+        if (_activeWallJump && _isWallSliding && _moveDirection.x == 0 && _wallCheckController.isTouched)
         {
             _isWallJumping = true;
             _wallJumpingDirection = transform.rotation.y == 0 ? -1 : 1;
