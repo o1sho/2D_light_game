@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(1, 100)] private float _jumpPower;
     [SerializeField] private float _jumpTime;
     [SerializeField] private bool _jumping;
+    [SerializeField] private int _amountStamina;
 
     [Header("WALL SLIDE & WALL JUMP SETTINGS:")]
     [SerializeField] private TouchCheckController _wallCheckController;
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TouchCheckController _groundCheckController;
     private Rigidbody2D _rigidBody2D;
     [SerializeField] private TrailRenderer _trailRenderer;
+    private PlayerStamina _playerStamina;
 
     private InputManager _inputManager;
 
@@ -56,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         _inputManager = GetComponent<InputManager>();
         _rigidBody2D= GetComponent<Rigidbody2D>();
         _trailRenderer = GetComponent<TrailRenderer>();
+        _playerStamina = GetComponent<PlayerStamina>();
     }
 
     private void OnEnable()
@@ -85,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         //Flip();
         Jump();
         WallSlide();    
-        WallJump();
+        //WallJump();
 
         if (!_isWallJumping) Flip();
         if (!_isWallJumping) Move(_moveDirection);
@@ -123,11 +126,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpStart()
     {
-        if (_groundCheckController.isTouched && _activeJump)
+        if (_groundCheckController.isTouched && _activeJump && _playerStamina.GetStamina() >= _amountStamina)
         {
             Debug.Log("StartJump!");
             _jumping = true;
             _jumpTime = 0;
+            _playerStamina.SpendStamina(_amountStamina);
         }
     }
 
@@ -179,12 +183,13 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator WallJump()
     {
-        if (_activeWallJump && _isWallSliding && _moveDirection.x == 0 && _wallCheckController.isTouched)
+        if (_activeWallJump && _isWallSliding && _moveDirection.x == 0 && _wallCheckController.isTouched && _playerStamina.GetStamina() >= _amountStamina)
         {
             _isWallJumping = true;
             _wallJumpingDirection = transform.rotation.y == 0 ? -1 : 1;
             if (_wallJumpingDirection > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
             if (_wallJumpingDirection < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
+            _playerStamina.SpendStamina(_amountStamina);
 
             _rigidBody2D.velocity = new Vector2(_wallJumpingDirection * _wallJumpingPower.x, _wallJumpingPower.y);
             yield return new WaitForSeconds(_wallJumpingDuration);
