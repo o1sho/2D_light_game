@@ -148,10 +148,11 @@ public class PlayerMovement : MonoBehaviour
     //////////////////////////
     private IEnumerator Dash()
     {
-        if (_moveDirection.x != 0 && _activeDash && _canDash && !_isWallSliding)
+        if (_moveDirection.x != 0 && _activeDash && _canDash && !_isWallSliding && _playerStamina.GetStamina() >= _amountStamina)
         {
             _canDash = false;
             _isDashing = true;
+            _playerStamina.SpendStamina(_amountStamina);
             float originalGravity = _rigidBody2D.gravityScale;
             _rigidBody2D.gravityScale = 0f;
             //_rigidBody2D.AddForce(_moveDirection * _dashingPower, ForceMode2D.Force);

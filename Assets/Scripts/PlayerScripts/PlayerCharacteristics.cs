@@ -6,7 +6,7 @@ public class PlayerCharacteristics : MonoBehaviour
 {
     [SerializeField] private int _vitality; //Влияет на кол-во хп  
     [SerializeField] private int _stamina; //Влияет на кол-во стамины и её реген.  
-    [SerializeField] private int _mobility; //Влияет на перезарядку рывка (dash) и макс. высоту прыжка.  
+    [SerializeField] private int _strength; //Влияет на урон оружием.  
     [SerializeField] private int _ammunition; //Макс. кол-во пуль в кармане.
 
     private void Start()
@@ -22,9 +22,9 @@ public class PlayerCharacteristics : MonoBehaviour
     {
         return _stamina;
     }
-    public int GetMobility()
+    public int GetStrength()
     {
-        return _mobility;
+        return _strength;
     }
     public int GetAmmunition()
     {
@@ -39,9 +39,9 @@ public class PlayerCharacteristics : MonoBehaviour
     {
         _stamina += count;
     }
-    public void SetMobility(int count)
+    public void SetStrength(int count)
     {
-        _mobility += count;
+        _strength += count;
     }
     public void SetAmmunition(int count)
     {

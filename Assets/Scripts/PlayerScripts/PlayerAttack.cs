@@ -12,6 +12,8 @@ public class PlayerAttack : MonoBehaviour
     private PlayerController _playerController;
     private InputManager _inputManager;
 
+    private Vector2 _attackDirection;
+
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
@@ -20,11 +22,38 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        _inputManager.inputController.Player.Attack.performed += context => OnAttack();
+
+    }
+
+    private void Update()
+    {
+        _attackDirection = _inputManager.inputController.Player.Attack.ReadValue<Vector2>();
+
+        OnAttack();
+        //Debug.Log(_attackDirection);
     }
 
     private void OnAttack()
     {
-        Debug.Log("Player Attack!");
+        if (_attackDirection == new Vector2(-1,0))
+        {
+            Debug.Log(_attackDirection);
+            Debug.Log("LeftAttack!");
+        }
+        if (_attackDirection == new Vector2(1, 0))
+        {
+            Debug.Log(_attackDirection);
+            Debug.Log("RightAttack!");
+        }
+        if (_attackDirection == new Vector2(0, 1))
+        {
+            Debug.Log(_attackDirection);
+            Debug.Log("UpAttack!");
+        }
+        if (_attackDirection == new Vector2(0, -1))
+        {
+            Debug.Log(_attackDirection);
+            Debug.Log("DownAttack!");
+        }
     }
 }
