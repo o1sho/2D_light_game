@@ -1,38 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PatrolAI : MonoBehaviour
 {
-    [SerializeField] float _speed;
-    [SerializeField] Transform[] _patrolPoints;
-    [SerializeField] float _waitTime;
-    [SerializeField] private int currentPointIndex;
+    [SerializeField] private int _moveSpeed;
+    private Vector2 _moveDirection;
+    [SerializeField] GameObject _patrolPointA;
+    [SerializeField] GameObject _patrolPointB;
+    private Transform _currentPoint;
 
-    private bool once;
+    private Rigidbody2D _rigidbody2D;
+    private Animator _anim;
+
+    private void Start()
+    {
+        _rigidbody2D= GetComponent<Rigidbody2D>();
+        _anim= GetComponent<Animator>();
+
+        _currentPoint = _patrolPointB.transform;
+        _anim.SetBool("isRunning", true);
+    }
 
     private void Update()
     {
-        if (transform.position != _patrolPoints[currentPointIndex].position)
+        if (_currentPoint == _patrolPointB.transform)
         {
-            transform.position = Vector2.MoveTowards(transform.position, _patrolPoints[currentPointIndex].position, _speed * Time.deltaTime);
-        } else
+            _moveDirection.x = 1;
+            if (Vector2.Distance(transform.position, _currentPoint.position) < 0.5f) _currentPoint = _patrolPointA.transform;
+        } else if (_currentPoint == _patrolPointA.transform)
         {
-            if (once == false)
-            {
-                once = true;
-                StartCoroutine(WaitingBetweenPoints());
-            }
+            _moveDirection.x = -1;
+            if (Vector2.Distance(transform.position, _currentPoint.position) < 0.5f) _currentPoint = _patrolPointB.transform;
         }
+
     }
 
-    private IEnumerator WaitingBetweenPoints()
+    private void FixedUpdate()
     {
-        yield return new WaitForSeconds(_waitTime);
-        currentPointIndex = currentPointIndex + 1 < _patrolPoints.Length ? currentPointIndex++ : 0;
-        Debug.Log("puj");
-        once = false;
+        Move(_moveDirection);
+        Flip();
+    }
+
+    private void Move(Vector2 directionMove)
+    {
+        _rigidbody2D.velocity = new Vector2(directionMove.x * _moveSpeed, _rigidbody2D.velocity.y);
+    }
+    private void Flip()
+    {
+        if (_moveDirection.x < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
+        if (_moveDirection.x > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }
 
-//_wallJumpingDirection = transform.rotation.y == 0 ? -1 : 1;

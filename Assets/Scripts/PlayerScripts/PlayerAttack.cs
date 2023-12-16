@@ -1,3 +1,4 @@
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
@@ -6,17 +7,13 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("Player attack stats:")]
     [SerializeField] private float _attackSpeed;
-    [SerializeField] private float _attackDamage;
+    [SerializeField] private int _attackDamage;
 
     [Header("Player components:")]
     private PlayerController _playerController;
     private InputManager _inputManager;
 
-    private Vector2 _attackDirection;
-    [SerializeField] Transform attackPointLeft;
-    [SerializeField] Transform attackPointRight;
-    [SerializeField] Transform attackPointUp;
-    [SerializeField] Transform attackPointDown;
+    [SerializeField] Transform attackPoint;
     public float attackRange;
     [SerializeField] LayerMask enemyLayers;
 
@@ -28,87 +25,29 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-
+        _inputManager.inputController.Player.Attack.performed += context => OnAttack();
     }
 
     private void Update()
     {
-        _attackDirection = _inputManager.inputController.Player.Attack.ReadValue<Vector2>();
-
-        OnAttack();
-        //Debug.Log(_attackDirection);
     }
 
     private void OnAttack()
     {
-        if (_attackDirection == new Vector2(-1,0))
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log(_attackDirection);
-            Debug.Log("LeftAttack!");
-
-            Collider2D[] hitEnemies  = Physics2D.OverlapCircleAll(attackPointLeft.position, attackRange, enemyLayers);
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                Debug.Log("Hit enemy " + enemy.name);
-            }
-        }
-        if (_attackDirection == new Vector2(1, 0))
-        {
-            Debug.Log(_attackDirection);
-            Debug.Log("RightAttack!");
-
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                Debug.Log("Hit enemy " + enemy.name);
-            }
-        }
-        if (_attackDirection == new Vector2(0, 1))
-        {
-            Debug.Log(_attackDirection);
-            Debug.Log("UpAttack!");
-
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointUp.position, attackRange, enemyLayers);
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                Debug.Log("Hit enemy " + enemy.name);
-            }
-        }
-        if (_attackDirection == new Vector2(0, -1))
-        {
-            Debug.Log(_attackDirection);
-            Debug.Log("DownAttack!");
-
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointDown.position, attackRange, enemyLayers);
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                Debug.Log("Hit enemy " + enemy.name);
-            }
+            Debug.Log("Hit enemy " + enemy.name);
+            enemy.GetComponent<EnemyHp>().SetEnemyHp(_attackDamage);
         }
     }
 
     private void OnDrawGizmos()
     {
-        if (attackPointLeft == null)
+        if (attackPoint == null)
         {
             return;
         }
-        if (attackPointRight == null)
-        {
-            return;
-        }
-        if (attackPointUp == null)
-        {
-            return;
-        }
-        if (attackPointDown == null)
-        {
-            return;
-        }
-
-        Gizmos.DrawWireSphere(attackPointLeft.position, attackRange);
-        Gizmos.DrawWireSphere(attackPointRight.position, attackRange);
-        Gizmos.DrawWireSphere(attackPointUp.position, attackRange);
-        Gizmos.DrawWireSphere(attackPointDown.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
