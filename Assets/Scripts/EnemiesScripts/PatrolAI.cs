@@ -12,15 +12,15 @@ public class PatrolAI : MonoBehaviour
     private Transform _currentPoint;
 
     private Rigidbody2D _rigidbody2D;
-    private Animator _anim;
+    private Animator _animator;
 
     private void Start()
     {
         _rigidbody2D= GetComponent<Rigidbody2D>();
-        _anim= GetComponent<Animator>();
+        _animator= GetComponent<Animator>();
 
         _currentPoint = _patrolPointB.transform;
-        _anim.SetBool("isRunning", true);
+        _animator.SetBool("isRunning", true);
     }
 
     private void Update()

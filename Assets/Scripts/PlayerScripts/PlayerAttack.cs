@@ -17,10 +17,13 @@ public class PlayerAttack : MonoBehaviour
     public float attackRange;
     [SerializeField] LayerMask enemyLayers;
 
+    private Animator _animator;
+
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
         _inputManager = GetComponent<InputManager>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -40,6 +43,7 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("Hit enemy " + enemy.name);
             enemy.GetComponent<EnemyHp>().SetEnemyHp(_attackDamage);
         }
+        _animator.SetTrigger("isAttacking");
     }
 
     private void OnDrawGizmos()

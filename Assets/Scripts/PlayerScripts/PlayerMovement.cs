@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidBody2D;
     [SerializeField] private TrailRenderer _trailRenderer;
     private PlayerStamina _playerStamina;
+    private Animator _animator;
 
     private InputManager _inputManager;
 
@@ -59,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidBody2D= GetComponent<Rigidbody2D>();
         _trailRenderer = GetComponent<TrailRenderer>();
         _playerStamina = GetComponent<PlayerStamina>();
+        _animator = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -92,6 +94,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (!_isWallJumping) Flip();
         if (!_isWallJumping) Move(_moveDirection);
+
+        //Animator
+        if (_moveDirection.x != 0)
+        {
+            _animator.SetBool("isRuning", true);
+        }
+        else if (_moveDirection.x == 0) _animator.SetBool("isRuning", false);
+
+        _animator.SetFloat("velY", _rigidBody2D.velocity.y);
     }
 
     //////////////////////////
