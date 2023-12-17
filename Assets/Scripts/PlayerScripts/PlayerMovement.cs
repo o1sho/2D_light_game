@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player movement stats:")]
     [SerializeField, Range(1, 100)] private float _moveSpeed;
     private Vector2 _moveDirection;
+    private bool _isFacingRight = true;
+
+    [Header("PLAYER STATES:")]
+    [SerializeField] private bool _isRuning;
 
     [Header("DASH SETTINGS:")]
     private bool _canDash = true;
@@ -79,30 +83,36 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _moveDirection = _inputManager.inputController.Player.Move.ReadValue<Vector2>();
+        CheckInput();
+        CheckMovementDirections();
     }
 
     private void FixedUpdate()
     {
+        UpdateAnimations();
+
         if (_isDashing) return;
 
-        //Move(_moveDirection);
-        //Flip();
         Jump();
         WallSlide();    
         //WallJump();
 
-        if (!_isWallJumping) Flip();
+        //if (!_isWallJumping) Flip();
         if (!_isWallJumping) Move(_moveDirection);
 
-        //Animator
-        if (_moveDirection.x != 0)
-        {
-            _animator.SetBool("isRuning", true);
-        }
-        else if (_moveDirection.x == 0) _animator.SetBool("isRuning", false);
 
+    }
+
+    private void CheckInput()
+    {
+        _moveDirection = _inputManager.inputController.Player.Move.ReadValue<Vector2>();
+    }
+
+    private void UpdateAnimations()
+    {
         _animator.SetFloat("velY", _rigidBody2D.velocity.y);
+        _animator.SetBool("isGrounded", _groundCheckController.isTouched);
+        _animator.SetBool("isRuning", _isRuning);
     }
 
     //////////////////////////
@@ -110,13 +120,36 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidBody2D.velocity = new Vector2(directionMove.x * _moveSpeed, _rigidBody2D.velocity.y);
     }
+
+    private void CheckMovementDirections()
+    {
+        if (_isFacingRight && _moveDirection.x < 0)
+        {
+            Flip();
+        } else if (!_isFacingRight && _moveDirection.x > 0)
+        {
+            Flip();
+        }
+
+        if (_moveDirection.x != 0)
+        {
+            _isRuning = true;
+        }
+        else
+        {
+            _isRuning = false;
+        }
+    }
     //////////////////////////
 
     //////////////////////////
     private void Flip()
     {
-        if (_moveDirection.x < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
-        if (_moveDirection.x > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
+        _isFacingRight = !_isFacingRight;
+        transform.Rotate(0f, 180f, 0f);
+        //transform.rotation = Quaternion.Euler(0, 180, 0);
+        //if (_moveDirection.x > 0) transform.rotation = Quaternion.Euler(0, 0, 0);
+        //if (_moveDirection.x < 0) transform.rotation = Quaternion.Euler(0, -180, 0);
     }
     //////////////////////////
 

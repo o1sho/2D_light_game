@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FixGaps
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: -1891322314, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 699670519, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 639691547, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -808666634, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 414840173, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1460536921, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1734449270, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1087776228, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1649502508, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1005923768, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1946461605, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1591223300, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1916087957, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 862385978, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -168468648, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -599914640, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1009926169, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1119471200, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1092545282, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1094445133, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1455350416, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1762204746, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1979268209, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1313488536, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1838706352, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -892734389, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1122629592, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 561835642, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 453475793, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1051663325, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: 1451092797, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  - {fileID: -1498227143, guid: dd1c06ea0ba3ef5499f6d4af2c54059f, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Tile Set_20
+  - Tile Set_21
+  - Tile Set_22
+  - Tile Set_23
+  - Tile Set_24
+  - Tile Set_25
+  - Tile Set_31
+  - Tile Set_26
+  - Tile Set_30
+  - Tile Set_27
+  - Tile Set_28
+  - Tile Set_29
+  - Tile Set_2
+  - Tile Set_3
+  - Tile Set_0
+  - Tile Set_1
+  - Tile Set_6
+  - Tile Set_7
+  - Tile Set_4
+  - Tile Set_5
+  - Tile Set_8
+  - Tile Set_9
+  - Tile Set_19
+  - Tile Set_18
+  - Tile Set_11
+  - Tile Set_10
+  - Tile Set_13
+  - Tile Set_12
+  - Tile Set_15
+  - Tile Set_14
+  - Tile Set_17
+  - Tile Set_16
+  m_RenderDataMap: {}
+  m_Tag: FixGaps
+  m_IsVariant: 0
