@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int _amountStamina;
 
     [Header("WALL SLIDE & WALL JUMP SETTINGS:")]
-    [SerializeField] private TouchCheckController _wallCheckController;
     private bool _isWallSliding;
     [SerializeField] private float _wallSlidingSpeed;
     private bool _isWallJumping;
@@ -49,7 +48,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool _activeWallJump;
 
     [Header("Player components:")]
-    [SerializeField] private TouchCheckController _groundCheckController;
+    private GroundCheckController _groundCheckController;
+    private WallCheckController _wallCheckController;
     private Rigidbody2D _rigidBody2D;
     [SerializeField] private TrailRenderer _trailRenderer;
     private PlayerStamina _playerStamina;
@@ -65,6 +65,8 @@ public class PlayerMovement : MonoBehaviour
         _trailRenderer = GetComponent<TrailRenderer>();
         _playerStamina = GetComponent<PlayerStamina>();
         _animator = GetComponent<Animator>();
+        _wallCheckController= GetComponent<WallCheckController>();
+        _groundCheckController= GetComponent<GroundCheckController>();
     }
 
     private void OnEnable()
@@ -111,7 +113,8 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateAnimations()
     {
         _animator.SetFloat("velY", _rigidBody2D.velocity.y);
-        _animator.SetBool("isGrounded", _groundCheckController.isTouched);
+        _animator.SetBool("isGrounded", _groundCheckController.isGrounded);
+        _animator.SetBool("isTouchingWall", _wallCheckController.isTouchingWall);
         _animator.SetBool("isRuning", _isRuning);
     }
 
@@ -170,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJumpStart()
     {
-        if (_groundCheckController.isTouched && _activeJump && _playerStamina.GetStamina() >= _amountStamina)
+        if (_groundCheckController.isGrounded && _activeJump && _playerStamina.GetStamina() >= _amountStamina)
         {
             Debug.Log("StartJump!");
             _jumping = true;
@@ -215,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
     //////////////////////////
     private void WallSlide()
     {
-        if (_wallCheckController.isTouched && !_groundCheckController.isTouched && _activeWallSlide)
+        if (_wallCheckController.isTouchingWall && !_groundCheckController.isGrounded && _activeWallSlide)
         {
             _isWallSliding = true;
             _rigidBody2D.velocity = new Vector2(_rigidBody2D.velocity.x, Mathf.Clamp(_rigidBody2D.velocity.y, - _wallSlidingSpeed, float.MaxValue));
@@ -228,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator WallJump()
     {
-        if (_activeWallJump && _isWallSliding && _moveDirection.x == 0 && _wallCheckController.isTouched && _playerStamina.GetStamina() >= _amountStamina)
+        if (_activeWallJump && _isWallSliding && _moveDirection.x == 0 && _wallCheckController.isTouchingWall && _playerStamina.GetStamina() >= _amountStamina)
         {
             _isWallJumping = true;
             _wallJumpingDirection = transform.rotation.y == 0 ? -1 : 1;

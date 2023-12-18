@@ -1,24 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GroundCheckController : MonoBehaviour
 {
-    public bool isGrounded = false;
+    public bool isGrounded;
+    [SerializeField] private Transform _groundCheck;
+    [SerializeField] private float _groundCheckRadius;
+    [SerializeField] private LayerMask _whatIsGround;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void FixedUpdate()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        GroundCheck();
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void GroundCheck()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
+        isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _whatIsGround);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(_groundCheck.position, _groundCheckRadius);
     }
 }

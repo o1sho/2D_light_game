@@ -6,6 +6,7 @@ public class PlayerStamina : MonoBehaviour
     [SerializeField] private float staminaPlayer;
     [SerializeField] private int staminaMaxPlayer;
     private int cooldownStaminaMultiplier;
+    private bool _staminaHealing;
 
     public RectTransform staminaBar;
     private Slider staminaBarSlider;
@@ -24,6 +25,7 @@ public class PlayerStamina : MonoBehaviour
         SetCooldownStaminaMultiplier();
         UpdateUIStaminaBar();
         FullHealStamina();
+        StartHealStamina();
     }
 
     private void Update()
@@ -51,13 +53,13 @@ public class PlayerStamina : MonoBehaviour
     }
     public void HealStamina()
     {
-        if (staminaPlayer < staminaMaxPlayer)
+        if (staminaPlayer < staminaMaxPlayer && _staminaHealing)
         {
             staminaPlayer += cooldownStaminaMultiplier * Time.deltaTime;
         }
     }
 
-    public void SpendStamina(int count)
+    public void SpendStamina(float count)
     {
         staminaPlayer -= count;
     }
@@ -65,5 +67,14 @@ public class PlayerStamina : MonoBehaviour
     public float GetStamina()
     {
         return staminaPlayer;
+    }
+
+    public void StopHealStamina()
+    {
+        _staminaHealing= false;
+    }
+    public void StartHealStamina()
+    {
+        _staminaHealing= true;
     }
 }
