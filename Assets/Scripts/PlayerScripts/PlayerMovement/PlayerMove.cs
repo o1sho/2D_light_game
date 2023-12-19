@@ -8,8 +8,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField, Range(1, 100)] private float _moveSpeed;
 
     private Vector2 _moveDirection;
-    private bool _isFacingRight = true;
+    public static bool isFacingRight = true;
     private bool _isRuning;
+    public static bool canMove=true;
+    public static bool canFlip=true;
 
     //COMPONENTS:
     private InputManager _inputManager;
@@ -26,11 +28,12 @@ public class PlayerMove : MonoBehaviour
     {
         CheckInput();
         CheckMovementDirections();
+        CheckIsRuning();
     }
     private void FixedUpdate()
     {
         UpdateAnimations();
-        Move();
+        if(canMove) Move();
     }
 
     private void CheckInput()
@@ -45,20 +48,24 @@ public class PlayerMove : MonoBehaviour
 
     private void Flip()
     {
-        _isFacingRight = !_isFacingRight;
+        isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
     }
 
     private void CheckMovementDirections()
     {
-        if (_isFacingRight && _moveDirection.x < 0)
+        if (isFacingRight && _moveDirection.x < 0)
         {
-            Flip();
+            if (canFlip) Flip();
         }
-        else if (!_isFacingRight && _moveDirection.x > 0)
+        else if (!isFacingRight && _moveDirection.x > 0)
         {
-            Flip();
+            if (canFlip) Flip();
         }
+    }
+
+    private void CheckIsRuning()
+    {
 
         if (_moveDirection.x != 0)
         {

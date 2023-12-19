@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player movement stats:")]
     [SerializeField, Range(1, 100)] private float _moveSpeed;
     private Vector2 _moveDirection;
-    private bool _isFacingRight = true;
+    public static bool _isFacingRight = true;
 
     [Header("PLAYER STATES:")]
     [SerializeField] private bool _isRuning;

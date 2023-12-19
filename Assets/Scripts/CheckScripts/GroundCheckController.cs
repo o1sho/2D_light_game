@@ -10,9 +10,13 @@ public class GroundCheckController : MonoBehaviour
     [SerializeField] private float _groundCheckRadius;
     [SerializeField] private LayerMask _whatIsGround;
 
-    private void FixedUpdate()
+    private void Update()
     {
         GroundCheck();
+    }
+    private void FixedUpdate()
+    {
+
     }
 
     private void GroundCheck()

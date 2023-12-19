@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMove))]
@@ -9,6 +10,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField, Range(1, 30)] private float _jumpPower;
     private float _jumpTime;
     private bool _jumping;
+    public static bool canJump = true;
 
     [SerializeField] private int _amountStamina;
 
@@ -45,7 +47,7 @@ public class PlayerJump : MonoBehaviour
 
     private void OnJumpStart()
     {
-        if (_groundCheckController.isGrounded && _playerStamina.GetStamina() >= _amountStamina)
+        if (_groundCheckController.isGrounded && _playerStamina.GetStamina() >= _amountStamina && canJump)
         {
             Debug.Log("StartJump!");
             _jumping = true;
