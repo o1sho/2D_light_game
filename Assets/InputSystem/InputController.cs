@@ -75,18 +75,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""AD"",
-                    ""id"": ""2673439a-5a50-466f-b89d-414857dd754d"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""WASD"",
                     ""id"": ""e1d1f5ba-49bd-4e97-a8e2-56bb77d5dc48"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -99,7 +88,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""53756ff7-735b-487a-90cc-7053411149f6"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
@@ -110,7 +99,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""c4668a0a-007d-4bfb-a21d-5d58acdb35f2"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
@@ -142,11 +131,33 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7cabb556-4947-429a-ae8d-df9647320160"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""8e014ced-f92c-4d81-9501-6e8f3f4bbcf6"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d345c82-b76c-49bb-b6cc-a5321d4bfae7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
