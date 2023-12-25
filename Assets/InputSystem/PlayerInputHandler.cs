@@ -9,16 +9,19 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
+    public bool RollInput { get; private set; }
     public bool GrabInput { get; private set; }
 
     [SerializeField]
     private float inputHoldTime = 0.2f;
 
     private float jumpInputStartTimer;
+    private float rollInputStartTimer;
 
     private void Update()
     {
         CheckJumpInputHoldTime();
+        CheckRollInputHoldTime();
     }
 
     public void OnMoveInput(InputAction.CallbackContext context)
@@ -53,6 +56,14 @@ public class PlayerInputHandler : MonoBehaviour
             jumpInputStartTimer = Time.time;
         }
     }
+    public void OnRollInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            RollInput = true;
+            rollInputStartTimer = Time.time;
+        }
+    }
 
     public void OnGrabInput(InputAction.CallbackContext context)
     {
@@ -68,6 +79,7 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
     public void UseJumpInput() => JumpInput = false;
+    public void UseRollInput() => RollInput = false;
 
     private void CheckJumpInputHoldTime()
     {
@@ -76,4 +88,13 @@ public class PlayerInputHandler : MonoBehaviour
             JumpInput= false;
         }
     }
+
+    private void CheckRollInputHoldTime()
+    {
+        if (Time.time >= rollInputStartTimer + inputHoldTime)
+        {
+            RollInput = false;
+        }
+    }
+
 }

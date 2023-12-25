@@ -80,6 +80,15 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Roll"",
+                    ""type"": ""Button"",
+                    ""id"": ""89d200ef-ffe4-4bd1-95eb-22b3233f3a3c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -225,6 +234,28 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                     ""action"": ""Grab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06fcf2a1-e716-4645-baa0-e6d13e31bee1"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aafe387d-dad3-4bb3-8fa4-99a84689c45c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -267,6 +298,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Grab = m_Player.FindAction("Grab", throwIfNotFound: true);
+        m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -332,6 +364,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Grab;
+    private readonly InputAction m_Player_Roll;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
@@ -342,6 +375,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
         public InputAction @Block => m_Wrapper.m_Player_Block;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Grab => m_Wrapper.m_Player_Grab;
+        public InputAction @Roll => m_Wrapper.m_Player_Roll;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -369,6 +403,9 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 @Grab.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
                 @Grab.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGrab;
+                @Roll.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
+                @Roll.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
+                @Roll.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRoll;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -391,6 +428,9 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 @Grab.started += instance.OnGrab;
                 @Grab.performed += instance.OnGrab;
                 @Grab.canceled += instance.OnGrab;
+                @Roll.started += instance.OnRoll;
+                @Roll.performed += instance.OnRoll;
+                @Roll.canceled += instance.OnRoll;
             }
         }
     }
@@ -421,5 +461,6 @@ public partial class @InputController : IInputActionCollection2, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnGrab(InputAction.CallbackContext context);
+        void OnRoll(InputAction.CallbackContext context);
     }
 }
