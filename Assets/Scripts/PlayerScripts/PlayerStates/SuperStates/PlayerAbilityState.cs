@@ -24,6 +24,7 @@ public class PlayerAbilityState : PlayerState
         base.Enter();
 
         isAbilityDone = false;
+        player.JumpState.DecreaseAmountOfJumpsLeft();
     }
 
     public override void Exit()

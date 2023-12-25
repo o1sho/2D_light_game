@@ -12,6 +12,11 @@ public class PlayerData : ScriptableObject
     public float jumpVelocity = 15f;
     public int amountOfJumps = 1;
 
+    [Header("Roll State:")]
+    public float rollVelocity = 30f;
+    public float rollTime = 0.2f;
+    //public float rollEndXMultiplier = 0.2f;
+
     [Header("In Air State")]
     public float coyoteTime = 0.2f;
 

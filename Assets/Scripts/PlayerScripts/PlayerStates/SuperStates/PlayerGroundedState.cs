@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerState
 {
+    //Input
     protected int xInput;
-
     private bool jumpInput;
+    private bool rollInput;
     private bool grabInput;
+
+    //Checks
     private bool isGrounded;
     private bool isTouchingWall;
     private bool isTouchingLedge;
@@ -43,13 +46,19 @@ public class PlayerGroundedState : PlayerState
 
         xInput = player.InputHandler.NormInputX;
         jumpInput = player.InputHandler.JumpInput;
+        rollInput = player.InputHandler.RollInput;
         grabInput= player.InputHandler.GrabInput;
 
         if (jumpInput && player.JumpState.CanJump())//
         {
             player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
-        } else if (!isGrounded)
+        } 
+        else if (rollInput)
+        {
+            stateMachine.ChangeState(player.RollState);
+        }
+        else if (!isGrounded)
         {
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
