@@ -36,4 +36,11 @@ public class PlayerData : ScriptableObject
     public float wallCheckDistance = 0.5f;
     public LayerMask whatIsGround;
 
+
+    [Header("Characteristics")]
+    public int vitality = 1;
+    public int stamina = 1;
+    public int strength = 1;
+    public int accuracy = 1;
+
 }

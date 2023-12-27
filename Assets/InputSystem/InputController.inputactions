@@ -24,15 +24,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "570ab0ad-1854-4da3-8274-d63b4a0bce56",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Block",
                     "type": "Button",
                     "id": "f43f6bd5-eccc-4fb8-81e3-22d24d77738e",
@@ -63,6 +54,24 @@
                     "name": "Roll",
                     "type": "Button",
                     "id": "89d200ef-ffe4-4bd1-95eb-22b3233f3a3c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrimaryAttack",
+                    "type": "Button",
+                    "id": "eb9c0e5b-1939-4544-92ce-ed8b85dc6a2f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SecondaryAttack",
+                    "type": "Button",
+                    "id": "7c4c8b12-184d-4b2d-b921-ecc1f344d63a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -182,17 +191,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a900cd4a-1357-473d-bab5-1d69688c5984",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard + Mouse",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "019c0df2-ab18-4571-b025-2c29d0b17470",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",
@@ -205,7 +203,7 @@
                 {
                     "name": "",
                     "id": "7aa20a1c-a736-4ddc-b55d-99c508d7ceb6",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -232,6 +230,50 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e5c5d98-7198-4fcd-9c0c-c0c5235389ed",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + Mouse",
+                    "action": "PrimaryAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60f9da20-2222-4b7c-a298-200ef485bd73",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PrimaryAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f70e15de-a43d-4a4e-91f6-6aec72aaa489",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + Mouse",
+                    "action": "SecondaryAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "beb0b264-da99-4b99-a9e9-0b7bc8ee56e0",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SecondaryAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

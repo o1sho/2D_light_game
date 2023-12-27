@@ -476,10 +476,6 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 570ab0ad-1854-4da3-8274-d63b4a0bce56
-    m_ActionName: Player/Attack[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: f43f6bd5-eccc-4fb8-81e3-22d24d77738e
     m_ActionName: Player/Block[/Mouse/rightButton]
   - m_PersistentCalls:
@@ -518,6 +514,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 89d200ef-ffe4-4bd1-95eb-22b3233f3a3c
     m_ActionName: Player/Roll[/Keyboard/alt,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114830906}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnPrimaryAttackInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: eb9c0e5b-1939-4544-92ce-ed8b85dc6a2f
+    m_ActionName: Player/PrimaryAttack[/Mouse/leftButton,/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114830906}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnSecondaryAttackInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7c4c8b12-184d-4b2d-b921-ecc1f344d63a
+    m_ActionName: Player/SecondaryAttack[/Mouse/rightButton,/XInputControllerWindows/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -539,6 +567,7 @@ MonoBehaviour:
   groundCheck: {fileID: 1545029080}
   wallCheck: {fileID: 1240062792}
   ledgeCheck: {fileID: 475552197}
+  ceilingCheck: {fileID: 1147085287}
 --- !u!4 &114830905
 Transform:
   m_ObjectHideFlags: 0
@@ -554,6 +583,7 @@ Transform:
   - {fileID: 1545029080}
   - {fileID: 1240062792}
   - {fileID: 475552197}
+  - {fileID: 1147085287}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -862,8 +892,8 @@ MonoBehaviour:
   - {x: -2.1590247, y: 1.4902649, z: 0}
   - {x: -2.0506017, y: 0.9144998, z: 0}
   m_ShapePathHash: -820274144
-  m_Mesh: {fileID: 1445273575}
-  m_InstanceId: 29146
+  m_Mesh: {fileID: 1483384468}
+  m_InstanceId: 29150
 --- !u!1 &465860589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,6 +2464,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1147085286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1147085287}
+  m_Layer: 0
+  m_Name: CeilingCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1147085287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147085286}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 114830905}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1240062791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2651,7 +2712,7 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
---- !u!43 &1445273575
+--- !u!43 &1483384468
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92310,7 +92371,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd81d7beeb464dd4594527a66b498101, type: 3}
   m_Name: 
@@ -92322,7 +92383,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a41ab75d7445854191cbfaecab1d9a7, type: 3}
   m_Name: 
@@ -92521,7 +92582,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebc71282327f88543bd9bd493d15c0a1, type: 3}
   m_Name: 
@@ -92552,7 +92613,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287d9ff6be06c4e4588a370d07874743, type: 3}
   m_Name: 
@@ -92587,7 +92648,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f038427b955d114ca6793c6d9504cbe, type: 3}
   m_Name: 
@@ -92609,7 +92670,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaded54807ae4b24295b6f513931e994, type: 3}
   m_Name: 
@@ -92627,7 +92688,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 388f2712240d3484ab54e8f71bbf1c6b, type: 3}
   m_Name: 
@@ -92640,7 +92701,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11b33a6e0da91fb4a8440249243827b0, type: 3}
   m_Name: 
@@ -92663,7 +92724,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016178231}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2ce3cb78d7d4424ea3f452f1cfe22d2, type: 3}
   m_Name: 

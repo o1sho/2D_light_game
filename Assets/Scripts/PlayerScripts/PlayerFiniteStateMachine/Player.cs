@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     public PlayerWallGrabState WallGrabState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
     public PlayerLedgeClimbState LedgeClimbState { get; private set; }
+    public PlayerAttackState PrimaryAttackState { get; private set; }
+    public PlayerAttackState SecondaryAttackState { get; private set; }
+
 
     #endregion
 
@@ -37,6 +40,8 @@ public class Player : MonoBehaviour
     private Transform wallCheck;
     [SerializeField]
     private Transform ledgeCheck;
+    [SerializeField]
+    private Transform ceilingCheck;
 
     #endregion
 
@@ -62,6 +67,8 @@ public class Player : MonoBehaviour
         WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
         WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
         LedgeClimbState = new PlayerLedgeClimbState(this, StateMachine, playerData, "ledgeClimbState");
+        PrimaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        SecondaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
     }
 
     private void Start()
@@ -126,6 +133,11 @@ public class Player : MonoBehaviour
         return Physics2D.Raycast(ledgeCheck.position, Vector2.right * FacingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
     }
 
+    public bool CheckIfTouchingCeiling()
+    {
+        return Physics2D.OverlapCircle(ceilingCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+    }
+
     public void CheckItShouldFlip(int xInput)
     {
         if (xInput != 0 && xInput != FacingDirection)
@@ -165,6 +177,7 @@ public class Player : MonoBehaviour
     {
         Gizmos.DrawWireSphere(groundCheck.position, playerData.groundCheckRadius);
         Gizmos.DrawLine(ledgeCheck.position, new Vector2(ledgeCheck.position.x + playerData.wallCheckDistance, ledgeCheck.position.y));
+        Gizmos.DrawWireSphere(ceilingCheck.position, playerData.groundCheckRadius);
     }
     #endregion
 }

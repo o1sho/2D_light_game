@@ -48,12 +48,20 @@ public class PlayerInAirState : PlayerState
 
         CheckCoyoteTime();
 
-
         xInput = player.InputHandler.NormInputX;
         jumpInput = player.InputHandler.JumpInput;
         grabInput = player.InputHandler.GrabInput;
 
-        if (isGrounded && player.CurrentVelocity.y < 0.01f)
+        if (player.InputHandler.AttackInputs[(int)CombatInputs.primary])
+        {
+            stateMachine.ChangeState(player.PrimaryAttackState);
+        }
+        else if (player.InputHandler.AttackInputs[(int)CombatInputs.secondary])
+        {
+            stateMachine.ChangeState(player.SecondaryAttackState);
+        }
+
+        else if (isGrounded && player.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }

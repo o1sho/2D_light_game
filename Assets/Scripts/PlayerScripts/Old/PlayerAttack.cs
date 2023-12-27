@@ -28,7 +28,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        _inputManager.inputController.Player.Attack.performed += context => OnAttack();
+        //_inputManager.inputController.Player.Attack.performed += context => OnAttack();
     }
 
     private void Update()

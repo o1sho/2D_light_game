@@ -14,6 +14,7 @@ public class PlayerGroundedState : PlayerState
     private bool isGrounded;
     private bool isTouchingWall;
     private bool isTouchingLedge;
+    private bool isTouchingCeiling;
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -26,6 +27,7 @@ public class PlayerGroundedState : PlayerState
         isGrounded = player.CheckIfGround();
         isTouchingWall = player.CheckIfTouchingWall();
         isTouchingLedge = player.CheckIfTouchingLedge();
+        isTouchingCeiling = player.CheckIfTouchingCeiling();
     }
 
     public override void Enter()
@@ -49,7 +51,16 @@ public class PlayerGroundedState : PlayerState
         rollInput = player.InputHandler.RollInput;
         grabInput= player.InputHandler.GrabInput;
 
-        if (jumpInput && player.JumpState.CanJump())//
+        if (player.InputHandler.AttackInputs[(int)CombatInputs.primary])
+        {
+            stateMachine.ChangeState(player.PrimaryAttackState);
+        } 
+        else if (player.InputHandler.AttackInputs[(int)CombatInputs.secondary])
+        {
+            stateMachine.ChangeState(player.SecondaryAttackState);
+        }
+
+        else if (jumpInput && player.JumpState.CanJump())//
         {
             player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
