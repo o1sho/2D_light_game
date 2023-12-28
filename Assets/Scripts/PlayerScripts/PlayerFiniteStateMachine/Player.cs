@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     public Animator Animator { get; private set; }
     public PlayerInputHandler InputHandler { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
+    public PlayerInventory Inventory { get; private set; }
+
     [SerializeField] private PlayerData playerData;
     #endregion
 
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
     private Transform ledgeCheck;
     [SerializeField]
     private Transform ceilingCheck;
+    
 
     #endregion
 
@@ -76,8 +79,12 @@ public class Player : MonoBehaviour
         Animator = GetComponent<Animator>();
         InputHandler = GetComponent<PlayerInputHandler>();
         Rigidbody= GetComponent<Rigidbody2D>();
+        Inventory = GetComponent<PlayerInventory>();
 
         FacingDirection = 1;
+
+        PrimaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
+        //SecondaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
 
         StateMachine.Initialize(IdleState); //
     }
