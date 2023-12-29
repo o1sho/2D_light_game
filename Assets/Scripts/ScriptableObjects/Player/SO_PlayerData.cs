@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
-public class PlayerData : ScriptableObject
+public class SO_PlayerData : ScriptableObject
 {
     [Header("Move State:")]
     public float movementVelocity = 10f;

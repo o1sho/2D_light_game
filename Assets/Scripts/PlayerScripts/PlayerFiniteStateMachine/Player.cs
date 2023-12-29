@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D Rigidbody { get; private set; }
     public PlayerInventory Inventory { get; private set; }
 
-    [SerializeField] private PlayerData playerData;
+    [SerializeField] private SO_PlayerData playerData;
     #endregion
 
     #region Check Transforms

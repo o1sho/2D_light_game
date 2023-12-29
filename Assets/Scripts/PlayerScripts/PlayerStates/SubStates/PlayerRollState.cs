@@ -6,7 +6,7 @@ using UnityEngine.Windows;
 public class PlayerRollState : PlayerAbilityState
 {
     private Vector2 rollDirection;
-    public PlayerRollState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+    public PlayerRollState(Player player, PlayerStateMachine stateMachine, SO_PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
 
