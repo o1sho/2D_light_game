@@ -15,7 +15,7 @@ public class PlayerRollState : PlayerAbilityState
         base.Enter();
 
         player.InputHandler.UseRollInput();
-        rollDirection = Vector2.right * player.FacingDirection;
+        rollDirection = Vector2.right * core.Movement.FacingDirection;
     }
 
     public override void Exit()
@@ -27,7 +27,7 @@ public class PlayerRollState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        player.SetVelocityX(playerData.rollVelocity * rollDirection.x);
+        core.Movement.SetVelocityX(playerData.rollVelocity * rollDirection.x);
 
         if (Time.time >= startTime + playerData.rollTime)
         {

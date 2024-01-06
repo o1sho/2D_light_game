@@ -30,13 +30,6 @@ public class SO_PlayerData : ScriptableObject
     public Vector2 startOffset;
     public Vector2 stopOffset;
 
-
-    [Header("Check Variables")]
-    public float groundCheckRadius = 0.3f;
-    public float wallCheckDistance = 0.5f;
-    public LayerMask whatIsGround;
-
-
     [Header("Characteristics")]
     public int vitality = 1;
     public int stamina = 1;
