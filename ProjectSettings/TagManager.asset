@@ -14,9 +14,9 @@ TagManager:
   - Water
   - UI
   - Obstacles
-  - Enemy
-  - 
-  - 
+  - Damageable
+  - Weapon
+  - Player
   - 
   - 
   - 
@@ -52,14 +52,14 @@ TagManager:
   - name: Platforms
     uniqueID: 1192496925
     locked: 0
+  - name: Enemies
+    uniqueID: 2871560139
+    locked: 0
   - name: Player
     uniqueID: 2079039697
     locked: 0
   - name: ForegroundDecorations
     uniqueID: 124434297
-    locked: 0
-  - name: Enemies
-    uniqueID: 2871560139
     locked: 0
   - name: UI
     uniqueID: 2810403035
