@@ -57,6 +57,7 @@ public class CollisionSenses : CoreComponent
     {
         Gizmos.DrawWireSphere(groundCheck.position, GroundCheckRadius);
         Gizmos.DrawLine(ledgeCheck.position, new Vector2(ledgeCheck.position.x + WallCheckDistance, ledgeCheck.position.y));
+        Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + WallCheckDistance, wallCheck.position.y));
         Gizmos.DrawWireSphere(ceilingCheck.position, GroundCheckRadius);
     }
     #endregion
