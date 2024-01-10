@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class EntityDetectedState : EntityState
 {
-    public EntityDetectedState(Entity entity, EntityStateMachine stateMachine, string animBoolName) : base(entity, stateMachine, animBoolName)
+    public EntityDetectedState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
-
     }
 
     public override void DoChecks()
@@ -30,9 +29,18 @@ public class EntityDetectedState : EntityState
 
         core.Movement.SetVelocityX(0);
 
-        if (!entity.Core.CollisionSenses.EntityMax)
+
+        if (entity.Core.CollisionSenses.EntityMax && !entity.Core.CollisionSenses.EntityMin)
         {
-            stateMachine.ChangeState(entity.MoveState);
+            stateMachine.ChangeState(entity.ChargeState);
+        }
+        else if (entity.Core.CollisionSenses.EntityMin)
+        {
+            stateMachine.ChangeState(entity.AttackState);
+        }
+        else if (!entity.Core.CollisionSenses.EntityMax)
+        {
+            stateMachine.ChangeState(entity.LookForPlayerState);
         }
     }
 

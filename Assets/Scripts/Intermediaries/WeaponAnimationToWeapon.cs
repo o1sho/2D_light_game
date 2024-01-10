@@ -11,7 +11,7 @@ public class WeaponAnimationToWeapon : MonoBehaviour
         weapon = GetComponentInParent<Weapon>();
     }
 
-    private void AwnimationFinishTrigger()
+    private void AnimationFinishTrigger()
     {
         weapon.AnimationFinishTrigger();
     }

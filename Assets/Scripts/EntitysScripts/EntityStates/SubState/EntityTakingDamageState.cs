@@ -5,16 +5,13 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class EntityTakingDamageState : EntityState
 {
-    protected SO_EntityTakingDamageStateData stateData;
-
     private float takingDamageTime;
 
     //private bool flipAfterIdle;
     private bool isTakingDamageTimeOver;
 
-    public EntityTakingDamageState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityTakingDamageStateData stateData) : base(entity, stateMachine, animBoolName)
+    public EntityTakingDamageState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
-        this.stateData = stateData;
     }
 
     public override void DoChecks()
@@ -53,6 +50,6 @@ public class EntityTakingDamageState : EntityState
 
     private void SetRandomTakingDamageTime()
     {
-        takingDamageTime = Random.Range(stateData.minTakingDamageTime, stateData.maxTakingDamageTime);
+        takingDamageTime = Random.Range(entityData.minTakingDamageTime, entityData.maxTakingDamageTime);
     }
 }

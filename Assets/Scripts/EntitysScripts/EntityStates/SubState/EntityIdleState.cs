@@ -5,16 +5,13 @@ using UnityEngine.Windows;
 
 public class EntityIdleState : EntityGroundedState
 {
-    protected SO_EntityIdleStateData stateData;
-
     private float idleTime;
 
     private bool flipAfterIdle;
     private bool isIdleTimeOver;
 
-    public EntityIdleState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityIdleStateData stateData) : base(entity, stateMachine, animBoolName)
+    public EntityIdleState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
-        this.stateData = stateData;
     }
 
     public override void Enter()
@@ -37,7 +34,10 @@ public class EntityIdleState : EntityGroundedState
             entity.Core.Movement.Flip();
         }
         */
-        entity.Core.Movement.Flip();
+        if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.Ground)
+        {
+            entity.Core.Movement.Flip();
+        }
     }
 
     public override void LogicUpdate()
@@ -53,11 +53,6 @@ public class EntityIdleState : EntityGroundedState
             stateMachine.ChangeState(entity.MoveState);
         }
 
-        if (entity.Core.CollisionSenses.EntityMin && entity.Behavior == "agressive")
-        {
-            stateMachine.ChangeState(entity.DetectedState);
-        }
-
     }
     
     private void SetFpipAfterIdle(bool flip)
@@ -67,6 +62,6 @@ public class EntityIdleState : EntityGroundedState
 
     private void SetRandomIdleTime()
     {
-        idleTime = Random.Range(stateData.minIdleTime, stateData.maxIdleTime);
+        idleTime = Random.Range(entityData.minIdleTime, entityData.maxIdleTime);
     }
 }

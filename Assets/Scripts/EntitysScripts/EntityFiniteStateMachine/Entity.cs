@@ -14,6 +14,9 @@ public class Entity : MonoBehaviour, IDamageable
     public EntityMoveState MoveState { get; private set; }
     public EntityTakingDamageState TakingDamageState { get; private set; }
     public EntityDetectedState DetectedState { get; private set; }
+    public EntityChargeState ChargeState { get; private set; }
+    public EntityLookForPlayerState LookForPlayerState { get; private set; }
+    public EntityAttackState AttackState { get; private set; }  
 
     #endregion
 
@@ -24,9 +27,7 @@ public class Entity : MonoBehaviour, IDamageable
 
     [SerializeField] protected GameObject hitParticles;
 
-    [SerializeField] private SO_EntityIdleStateData entityIdleStateData;
-    [SerializeField] private SO_EntityMoveStateData entityMoveStateData;
-    [SerializeField] private SO_EntityTakingDamageStateData entityTakingDamageStateData;
+    [SerializeField] private SO_EntityData entityData;
 
     #endregion
 
@@ -47,10 +48,14 @@ public class Entity : MonoBehaviour, IDamageable
 
         StateMachine = new EntityStateMachine(); //
 
-        IdleState = new EntityIdleState(this, StateMachine, "idle", entityIdleStateData);
-        MoveState = new EntityMoveState(this, StateMachine, "move", entityMoveStateData);
-        TakingDamageState = new EntityTakingDamageState(this, StateMachine, "takingDamage", entityTakingDamageStateData);
-        DetectedState = new EntityDetectedState(this, StateMachine, "detected");
+        IdleState = new EntityIdleState(this, StateMachine, "idle", entityData);
+        MoveState = new EntityMoveState(this, StateMachine, "move", entityData);
+        TakingDamageState = new EntityTakingDamageState(this, StateMachine, "takingDamage", entityData);
+        DetectedState = new EntityDetectedState(this, StateMachine, "detected", entityData);
+        ChargeState = new EntityChargeState(this, StateMachine, "charge", entityData);
+        LookForPlayerState = new EntityLookForPlayerState(this, StateMachine, "lookForPlayer", entityData);
+        AttackState = new EntityAttackState(this, StateMachine, "attack", entityData);
+
     }
 
     private void Start()
@@ -81,4 +86,6 @@ public class Entity : MonoBehaviour, IDamageable
         Instantiate(hitParticles, transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
         StateMachine.ChangeState(TakingDamageState);
     }
+
+    private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }

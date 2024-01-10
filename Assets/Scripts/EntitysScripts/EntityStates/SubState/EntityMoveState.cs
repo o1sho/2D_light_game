@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class EntityMoveState : EntityGroundedState
 {
-    protected SO_EntityMoveStateData stateData;
-
-    public EntityMoveState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityMoveStateData stateData) : base(entity, stateMachine, animBoolName)
+    public EntityMoveState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
-        this.stateData = stateData;
     }
 
     public override void DoChecks()
@@ -20,7 +17,7 @@ public class EntityMoveState : EntityGroundedState
     {
         base.Enter();
 
-        entity.Core.Movement.SetVelocityX(stateData.movementSpeed * entity.Core.Movement.FacingDirection);
+        entity.Core.Movement.SetVelocityX(entityData.movementSpeed * entity.Core.Movement.FacingDirection);
     }
 
     public override void Exit()
@@ -32,9 +29,9 @@ public class EntityMoveState : EntityGroundedState
     {
         base.LogicUpdate();
 
-        entity.Core.Movement.SetVelocityX(stateData.movementSpeed * entity.Core.Movement.FacingDirection);
+        entity.Core.Movement.SetVelocityX(entityData.movementSpeed * entity.Core.Movement.FacingDirection);
 
-        if (entity.Core.CollisionSenses.EntityMin && entity.Behavior == "agressive")
+        if (entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax && entity.Behavior == "agressive")
         {
             stateMachine.ChangeState(entity.DetectedState);
         }
