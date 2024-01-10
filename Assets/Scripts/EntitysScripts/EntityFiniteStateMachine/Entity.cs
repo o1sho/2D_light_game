@@ -7,12 +7,13 @@ using static UnityEngine.EventSystems.EventTrigger;
 public class Entity : MonoBehaviour, IDamageable
 {
     #region Player State Variables
-    public EntityStateMachine StateMachine { get; private set; }
+    protected EntityStateMachine StateMachine;
 
-    // Player States
+    // Enity States
     public EntityIdleState IdleState { get; private set; }
     public EntityMoveState MoveState { get; private set; }
     public EntityTakingDamageState TakingDamageState { get; private set; }
+    public EntityDetectedState DetectedState { get; private set; }
 
     #endregion
 
@@ -23,13 +24,20 @@ public class Entity : MonoBehaviour, IDamageable
 
     [SerializeField] protected GameObject hitParticles;
 
-    //[SerializeField] private SO_EntityData entityData;
     [SerializeField] private SO_EntityIdleStateData entityIdleStateData;
     [SerializeField] private SO_EntityMoveStateData entityMoveStateData;
-    [SerializeField] private SO_EntityDetectedStateData entityDetectedStateData;
     [SerializeField] private SO_EntityTakingDamageStateData entityTakingDamageStateData;
 
-    //[SerializeField] private SO_PlayerData playerData;
+    #endregion
+
+    #region Types of Behavior
+    public enum TypesOfBehavior 
+    {
+        peaceful,
+        agressive
+    };
+    [SerializeField] private TypesOfBehavior typeOfBehavior;
+    public string Behavior { get; private set; }
     #endregion
 
     #region Unity Callback Functions
@@ -42,6 +50,7 @@ public class Entity : MonoBehaviour, IDamageable
         IdleState = new EntityIdleState(this, StateMachine, "idle", entityIdleStateData);
         MoveState = new EntityMoveState(this, StateMachine, "move", entityMoveStateData);
         TakingDamageState = new EntityTakingDamageState(this, StateMachine, "takingDamage", entityTakingDamageStateData);
+        DetectedState = new EntityDetectedState(this, StateMachine, "detected");
     }
 
     private void Start()
@@ -50,6 +59,8 @@ public class Entity : MonoBehaviour, IDamageable
         Animator = GetComponent<Animator>();
 
         StateMachine.Initialize(IdleState); //
+
+        Behavior = typeOfBehavior.ToString();
     }
 
     private void Update()

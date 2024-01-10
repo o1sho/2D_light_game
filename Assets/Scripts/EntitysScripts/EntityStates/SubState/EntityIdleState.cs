@@ -53,6 +53,11 @@ public class EntityIdleState : EntityGroundedState
             stateMachine.ChangeState(entity.MoveState);
         }
 
+        if (entity.Core.CollisionSenses.EntityMin && entity.Behavior == "agressive")
+        {
+            stateMachine.ChangeState(entity.DetectedState);
+        }
+
     }
     
     private void SetFpipAfterIdle(bool flip)
