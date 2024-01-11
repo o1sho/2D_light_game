@@ -30,20 +30,19 @@ public class EntityLookForPlayerState : EntityGroundedState
     private IEnumerator LookForPlayer()
     {
         entity.Core.Movement.Flip();
-        yield return new WaitForSeconds(entityData.timeBetweenTurns);
         if (entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax) 
         {
             stateMachine.ChangeState(entity.DetectedState);
         } 
-        else
+        else if (!entity.Core.CollisionSenses.EntityMin || !entity.Core.CollisionSenses.EntityMax)
         {
-            entity.Core.Movement.Flip();
             yield return new WaitForSeconds(entityData.timeBetweenTurns);
+            entity.Core.Movement.Flip();
             if (entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax)
             {
                 stateMachine.ChangeState(entity.DetectedState);
             } 
-            else
+            else if (!entity.Core.CollisionSenses.EntityMin && !entity.Core.CollisionSenses.EntityMax)
             {
                 stateMachine.ChangeState(entity.IdleState);
             }

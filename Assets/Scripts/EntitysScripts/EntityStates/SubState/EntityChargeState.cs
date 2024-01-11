@@ -41,7 +41,7 @@ public class EntityChargeState : EntityState
 
         if (entity.Core.CollisionSenses.EntityMin)
         {
-            stateMachine.ChangeState(entity.AttackState);
+            stateMachine.ChangeState(entity.MeleeAttackState);
         }
         else if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.Ground)
         {

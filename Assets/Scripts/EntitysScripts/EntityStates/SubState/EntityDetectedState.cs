@@ -36,7 +36,7 @@ public class EntityDetectedState : EntityState
         }
         else if (entity.Core.CollisionSenses.EntityMin)
         {
-            stateMachine.ChangeState(entity.AttackState);
+            stateMachine.ChangeState(entity.MeleeAttackState);
         }
         else if (!entity.Core.CollisionSenses.EntityMax)
         {

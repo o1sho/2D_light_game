@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class Entity : MonoBehaviour, IDamageable
+public class Entity : MonoBehaviour
 {
     #region Player State Variables
     protected EntityStateMachine StateMachine;
@@ -16,7 +16,8 @@ public class Entity : MonoBehaviour, IDamageable
     public EntityDetectedState DetectedState { get; private set; }
     public EntityChargeState ChargeState { get; private set; }
     public EntityLookForPlayerState LookForPlayerState { get; private set; }
-    public EntityAttackState AttackState { get; private set; }  
+
+    public EntityMeleeAttackState MeleeAttackState { get; private set; }  
 
     #endregion
 
@@ -28,6 +29,8 @@ public class Entity : MonoBehaviour, IDamageable
     [SerializeField] protected GameObject hitParticles;
 
     [SerializeField] private SO_EntityData entityData;
+
+    [SerializeField] private Transform attackPosition;
 
     #endregion
 
@@ -54,7 +57,8 @@ public class Entity : MonoBehaviour, IDamageable
         DetectedState = new EntityDetectedState(this, StateMachine, "detected", entityData);
         ChargeState = new EntityChargeState(this, StateMachine, "charge", entityData);
         LookForPlayerState = new EntityLookForPlayerState(this, StateMachine, "lookForPlayer", entityData);
-        AttackState = new EntityAttackState(this, StateMachine, "attack", entityData);
+
+        MeleeAttackState = new EntityMeleeAttackState(this, StateMachine, "meleeAttack", entityData);
 
     }
 
@@ -80,12 +84,6 @@ public class Entity : MonoBehaviour, IDamageable
     }
     #endregion
 
-    public void Damage(float amount)
-    {
-        Debug.Log(amount + " Damage taken");
-        Instantiate(hitParticles, transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
-        StateMachine.ChangeState(TakingDamageState);
-    }
-
+    private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
 }

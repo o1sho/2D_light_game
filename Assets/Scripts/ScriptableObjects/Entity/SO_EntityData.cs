@@ -23,5 +23,4 @@ public class SO_EntityData : ScriptableObject
     [Header("Look For Player State:")]
     public int amountOfTurns = 2;
     public float timeBetweenTurns = 0.75f;
-
 }

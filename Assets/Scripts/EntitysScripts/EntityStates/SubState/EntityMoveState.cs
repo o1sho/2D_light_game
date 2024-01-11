@@ -31,11 +31,11 @@ public class EntityMoveState : EntityGroundedState
 
         entity.Core.Movement.SetVelocityX(entityData.movementSpeed * entity.Core.Movement.FacingDirection);
 
-        if (entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax && entity.Behavior == "agressive")
+        if ((entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax) && entity.Behavior == "agressive")
         {
             stateMachine.ChangeState(entity.DetectedState);
         }
-        else if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.Ground)
+        else if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.LedgeVertical)
         {
             stateMachine.ChangeState(entity.IdleState);
         }

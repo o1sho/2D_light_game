@@ -10,24 +10,8 @@ public class PlayerGroundedState : PlayerState
     private bool rollInput;
     private bool grabInput;
 
-    //Checks
-    private bool isGrounded;
-    private bool isTouchingWall;
-    private bool isTouchingLedge;
-    private bool isTouchingCeiling;
-
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, SO_PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-
-        isGrounded = core.CollisionSenses.Ground;
-        isTouchingWall = core.CollisionSenses.Wall;
-        isTouchingLedge = core.CollisionSenses.Ledge;
-        isTouchingCeiling = core.CollisionSenses.Ceiling;
     }
 
     public override void Enter()
@@ -69,12 +53,12 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.RollState);
         }
-        else if (!isGrounded)
+        else if (!player.Core.CollisionSenses.Ground)
         {
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         } 
-        else if (isTouchingWall && grabInput && isTouchingLedge)
+        else if (player.Core.CollisionSenses.Wall && grabInput && player.Core.CollisionSenses.LedgeHorizontal)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }

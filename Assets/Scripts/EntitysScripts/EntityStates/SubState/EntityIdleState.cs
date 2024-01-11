@@ -34,7 +34,7 @@ public class EntityIdleState : EntityGroundedState
             entity.Core.Movement.Flip();
         }
         */
-        if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.Ground)
+        if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.LedgeVertical)
         {
             entity.Core.Movement.Flip();
         }
