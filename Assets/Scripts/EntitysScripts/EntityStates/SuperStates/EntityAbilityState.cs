@@ -25,10 +25,15 @@ public class EntityAbilityState : EntityState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
+        
         if (isAbilityDone)
         {
-            stateMachine.ChangeState(entity.IdleState);
+            stateMachine.ChangeState(entity.MoveState);
+        }
+
+        if (entity.Core.Combat.Damaged)
+        {
+            stateMachine.ChangeState(entity.TakingDamageState);
         }
     }
 }

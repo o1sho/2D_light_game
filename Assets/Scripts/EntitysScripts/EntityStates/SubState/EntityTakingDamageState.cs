@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class EntityTakingDamageState : EntityState
+public class EntityTakingDamageState : EntityAbilityState
 {
     private float takingDamageTime;
 
@@ -12,6 +12,13 @@ public class EntityTakingDamageState : EntityState
 
     public EntityTakingDamageState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+
+        isAbilityDone= true;
     }
 
     public override void DoChecks()
@@ -23,7 +30,7 @@ public class EntityTakingDamageState : EntityState
     {
         base.Enter();
 
-        entity.Core.Movement.SetVelocityX(0);
+        entity.Core.Movement.SetVelocityX(0f);
         isTakingDamageTimeOver = false;
         SetRandomTakingDamageTime();
     }
@@ -32,6 +39,7 @@ public class EntityTakingDamageState : EntityState
     {
         base.Exit();
 
+        entity.Core.Combat.Damaged = false;
     }
 
     public override void LogicUpdate()
@@ -39,8 +47,17 @@ public class EntityTakingDamageState : EntityState
         base.LogicUpdate();
 
         if (Time.time >= startTime + takingDamageTime) isTakingDamageTimeOver = true;
+
         entity.Core.Movement.SetVelocityX(0);
-        if (isTakingDamageTimeOver) stateMachine.ChangeState(entity.MoveState);
+
+        if (isTakingDamageTimeOver && !entity.Core.CollisionSenses.EntityMin && !entity.Core.CollisionSenses.EntityMax)
+        {
+            stateMachine.ChangeState(entity.LookForPlayerState);
+        }
+        else if (isTakingDamageTimeOver)
+        {
+            stateMachine.ChangeState(entity.DetectedState);
+        }
     }
 
     public override void PhysicsUpdate()

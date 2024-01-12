@@ -13,6 +13,8 @@ public class EntityLookForPlayerState : EntityGroundedState
         base.Enter();
 
         entity.StartCoroutine(LookForPlayer());
+
+        core.Movement.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -24,6 +26,7 @@ public class EntityLookForPlayerState : EntityGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
         entity.Core.Movement.SetVelocityX(0f);
     }
 

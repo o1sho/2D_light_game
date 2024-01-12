@@ -18,7 +18,7 @@ public class EntityIdleState : EntityGroundedState
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0);
+        core.Movement.SetVelocityX(0f);
 
         isIdleTimeOver = false;
         SetRandomIdleTime();
@@ -46,7 +46,7 @@ public class EntityIdleState : EntityGroundedState
 
         if (Time.time >= startTime + idleTime) isIdleTimeOver = true;
 
-        core.Movement.SetVelocityX(0);
+        core.Movement.SetVelocityX(0f);
 
         if (isIdleTimeOver)
         {

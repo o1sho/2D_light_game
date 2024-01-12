@@ -17,7 +17,7 @@ MonoBehaviour:
   movementSpeed: 3
   minTakingDamageTime: 1
   maxTakingDamageTime: 2
-  chargeSpeed: 6
+  chargeSpeed: 4
   chargeTime: 1
   amountOfTurns: 2
   timeBetweenTurns: 1

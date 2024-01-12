@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityChargeState : EntityState
+public class EntityChargeState : EntityGroundedState
 {
     private bool isChargeTimeOver;
 

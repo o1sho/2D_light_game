@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityDetectedState : EntityState
+public class EntityDetectedState : EntityGroundedState
 {
     public EntityDetectedState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
@@ -16,6 +16,8 @@ public class EntityDetectedState : EntityState
     public override void Enter()
     {
         base.Enter();
+
+        core.Movement.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -27,7 +29,7 @@ public class EntityDetectedState : EntityState
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0);
+        core.Movement.SetVelocityX(0f);
 
 
         if (entity.Core.CollisionSenses.EntityMax && !entity.Core.CollisionSenses.EntityMin)

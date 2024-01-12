@@ -18,5 +18,9 @@ public class EntityGroundedState : EntityState
     {
         base.LogicUpdate();
 
+        if (entity.Core.Combat.Damaged)
+        {
+            stateMachine.ChangeState(entity.TakingDamageState);
+        }
     }
 }

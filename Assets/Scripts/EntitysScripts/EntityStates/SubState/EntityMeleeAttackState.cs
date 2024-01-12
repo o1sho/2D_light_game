@@ -25,6 +25,8 @@ public class EntityMeleeAttackState : EntityAbilityState
     public override void Enter()
     {
         base.Enter();
+
+        core.Movement.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -36,7 +38,11 @@ public class EntityMeleeAttackState : EntityAbilityState
     {
         base.LogicUpdate();
 
-        //core.Movement.SetVelocityX(0f);
+        core.Movement.SetVelocityX(0f);
+        if (!entity.Core.CollisionSenses.EntityMin && !entity.Core.CollisionSenses.EntityMax)
+        {
+            stateMachine.ChangeState(entity.LookForPlayerState);
+        }
     }
 
     private void TriggerAttack()
@@ -49,7 +55,7 @@ public class EntityMeleeAttackState : EntityAbilityState
 
             if (damageable != null)
             {
-                damageable.Damage(entity.Core.Combat.AttackDamage);
+                damageable.TakingDamage(entity.Core.Combat.AttackDamage);
             }
         }
     }

@@ -16,9 +16,15 @@ MonoBehaviour:
   - attackName: Left Slash
     movementSpeed: 1
     damageAmount: 10
+    knockbackStrenght: 1
+    knockbackAngle: {x: 1, y: 1}
   - attackName: Right Slash
     movementSpeed: 2
     damageAmount: 15
+    knockbackStrenght: 2
+    knockbackAngle: {x: 1, y: 1}
   - attackName: Up Slash
     movementSpeed: 1
     damageAmount: 20
+    knockbackStrenght: 3
+    knockbackAngle: {x: 1, y: 2}

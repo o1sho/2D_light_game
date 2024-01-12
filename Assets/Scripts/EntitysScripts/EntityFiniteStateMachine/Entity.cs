@@ -86,4 +86,13 @@ public class Entity : MonoBehaviour
 
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+
+    /*
+    public void Damage(float amount)
+    {
+        Debug.Log(transform + " Damaged! " + amount + " Damage taken");
+        Instantiate(hitParticles, transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        StateMachine.ChangeState(TakingDamageState);
+    }
+    */
 }
