@@ -17,7 +17,7 @@ public class EntityMoveState : EntityGroundedState
     {
         base.Enter();
 
-        entity.Core.Movement.SetVelocityX(entityData.movementSpeed * entity.Core.Movement.FacingDirection);
+        Movement?.SetVelocityX(entityData.movementSpeed * Movement.FacingDirection);
     }
 
     public override void Exit()
@@ -29,13 +29,13 @@ public class EntityMoveState : EntityGroundedState
     {
         base.LogicUpdate();
 
-        entity.Core.Movement.SetVelocityX(entityData.movementSpeed * entity.Core.Movement.FacingDirection);
+        Movement?.SetVelocityX(entityData.movementSpeed * Movement.FacingDirection);
 
-        if ((entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax) && entity.Behavior == "agressive")
+        if (CollisionSenses.EntityMax && entity.Behavior == "agressive")
         {
             stateMachine.ChangeState(entity.DetectedState);
         }
-        else if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.LedgeVertical)
+        else if (CollisionSenses.Wall || !CollisionSenses.LedgeVertical)
         {
             stateMachine.ChangeState(entity.IdleState);
         }

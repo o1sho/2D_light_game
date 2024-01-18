@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EntityMeleeAttackState : EntityAbilityState
 {
+
     public EntityMeleeAttackState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
     }
@@ -26,7 +28,7 @@ public class EntityMeleeAttackState : EntityAbilityState
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -38,26 +40,29 @@ public class EntityMeleeAttackState : EntityAbilityState
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
-        if (!entity.Core.CollisionSenses.EntityMin && !entity.Core.CollisionSenses.EntityMax)
-        {
-            stateMachine.ChangeState(entity.LookForPlayerState);
-        }
+        Movement?.SetVelocityX(0f);
+
     }
 
     private void TriggerAttack()
     {
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(entity.Core.Combat.AttackPosition.position, entity.Core.Combat.AttackRadius, entity.Core.Combat.WhatIsEnemy);
+
+        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(Combat.AttackPosition.position, Combat.AttackRadius, Combat.WhatIsEnemy);
 
         foreach (Collider2D collider in detectedObjects)
         {
             IDamageable damageable = collider.GetComponentInChildren<IDamageable>();
+            IKnockbackable knockbackable = collider.GetComponentInChildren<IKnockbackable>();
 
             if (damageable != null)
             {
-                damageable.TakingDamage(entity.Core.Combat.AttackDamage);
+                damageable.TakingDamage(Combat.AttackDamage);
+            }
+
+            if (knockbackable != null)
+            {
+                knockbackable.Knockback(entityData.angle, entityData.strength, Movement.FacingDirection);
             }
         }
     }
-
 }

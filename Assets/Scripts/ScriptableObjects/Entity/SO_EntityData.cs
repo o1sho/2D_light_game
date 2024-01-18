@@ -23,4 +23,8 @@ public class SO_EntityData : ScriptableObject
     [Header("Look For Player State:")]
     public int amountOfTurns = 2;
     public float timeBetweenTurns = 0.75f;
+
+    [Header("Melee Attack State:")]
+    public float strength;
+    public Vector2 angle;
 }

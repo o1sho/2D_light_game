@@ -10,7 +10,30 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     private bool isKnockbackActive;
     private float knockbackStartTime;
 
-    public void LogicUpdate()
+    //CoreComponents
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+
+    private CollisionSenses CollisionSenses
+    {
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
+    }
+    private CollisionSenses collisionSenses;
+
+    private Stats Stats
+    {
+        get => stats ??= core.GetCoreComponent<Stats>();
+    }
+    private Stats stats;
+
+    private ParticleManager ParticleManager => particleManager ? particleManager : core.GetCoreComponent<ParticleManager>();
+    private ParticleManager particleManager;
+    //
+
+    public override void LogicUpdate()
     {
         CheckKnockback();
     }
@@ -39,23 +62,24 @@ public class Combat : CoreComponent, IDamageable, IKnockbackable
     {
         damaged = true;
         Debug.Log(core.transform.parent.name + " Damaged! " + amount + " Damage taken");
-        Instantiate(hitParticles, transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
+        ParticleManager?.StartParticlesWithRandomRotation(hitParticles);
+        Stats?.DecreaseHealth(amount);
     }
 
     public void Knockback(Vector2 angle, float strength, int direction)
     {
-        core.Movement.SetVelocity(strength, angle, direction);
-        core.Movement.CanSetVelocity = false;
+        Movement?.SetVelocity(angle, strength, direction);
+        Movement.CanSetVelocity = false;
         isKnockbackActive = true;
         knockbackStartTime= Time.time;
     }
 
     private void CheckKnockback()
     {
-        if (isKnockbackActive && core.Movement.CurrentVelocity.y <= 0.01f && core.CollisionSenses.Ground)
+        if (isKnockbackActive && Movement.CurrentVelocity.y <= 0.01f && CollisionSenses.Ground)
         {
             isKnockbackActive= false;
-            core.Movement.CanSetVelocity = true;
+            Movement.CanSetVelocity = true;
         }
     }
 

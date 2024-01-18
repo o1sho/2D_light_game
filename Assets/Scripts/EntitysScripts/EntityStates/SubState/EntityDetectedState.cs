@@ -17,7 +17,7 @@ public class EntityDetectedState : EntityGroundedState
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -29,21 +29,22 @@ public class EntityDetectedState : EntityGroundedState
     {
         base.LogicUpdate();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
 
 
-        if (entity.Core.CollisionSenses.EntityMax && !entity.Core.CollisionSenses.EntityMin)
+        if (CollisionSenses.EntityMax && !CollisionSenses.EntityMin)
         {
             stateMachine.ChangeState(entity.ChargeState);
         }
-        else if (entity.Core.CollisionSenses.EntityMin)
+        else if (CollisionSenses.EntityMin)
         {
             stateMachine.ChangeState(entity.MeleeAttackState);
         }
-        else if (!entity.Core.CollisionSenses.EntityMax)
+        else if (!CollisionSenses.EntityMax)
         {
             stateMachine.ChangeState(entity.LookForPlayerState);
         }
+
     }
 
     public override void PhysicsUpdate()

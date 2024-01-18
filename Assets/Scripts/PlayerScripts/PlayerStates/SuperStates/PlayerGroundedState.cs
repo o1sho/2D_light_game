@@ -9,9 +9,43 @@ public class PlayerGroundedState : PlayerState
     private bool jumpInput;
     private bool rollInput;
     private bool grabInput;
+    //
+
+    //Checks
+    private bool isGrounded;
+    private bool isTouchingWall;
+    private bool isTouchingLedgeHorizontal;
+    //
+
+    //CoreComponents
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+
+    protected CollisionSenses CollisionSenses
+    {
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
+    }
+    private CollisionSenses collisionSenses;
+    //
+
 
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, SO_PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+
+        if (CollisionSenses)
+        {
+            isGrounded = CollisionSenses.Ground;
+            isTouchingWall = CollisionSenses.Wall;
+            isTouchingLedgeHorizontal = CollisionSenses.LedgeHorizontal;
+        }
     }
 
     public override void Enter()
@@ -53,12 +87,12 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.RollState);
         }
-        else if (!player.Core.CollisionSenses.Ground)
+        else if (!isGrounded)
         {
             player.InAirState.StartCoyoteTime();
             stateMachine.ChangeState(player.InAirState);
         } 
-        else if (player.Core.CollisionSenses.Wall && grabInput && player.Core.CollisionSenses.LedgeHorizontal)
+        else if (isTouchingWall && grabInput && isTouchingLedgeHorizontal)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }

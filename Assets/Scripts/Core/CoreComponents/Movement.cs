@@ -25,7 +25,7 @@ public class Movement : CoreComponent
         CanSetVelocity = true;
     }
 
-    public void LogicUpdate()
+    public override void LogicUpdate()
     {
         CurrentVelocity = Rigidbody.velocity;
     }
@@ -38,7 +38,7 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
-    public void SetVelocity(float velocity, Vector2 angle, int direction)
+    public void SetVelocity(Vector2 angle, float velocity, int direction)
     {
         angle.Normalize();
         workspace.Set(angle.x * velocity * direction, angle.y * velocity);

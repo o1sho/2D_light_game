@@ -14,7 +14,7 @@ public class EntityLookForPlayerState : EntityGroundedState
 
         entity.StartCoroutine(LookForPlayer());
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -27,27 +27,38 @@ public class EntityLookForPlayerState : EntityGroundedState
     {
         base.LogicUpdate();
 
-        entity.Core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
     }
 
     private IEnumerator LookForPlayer()
     {
-        entity.Core.Movement.Flip();
-        if (entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax) 
+        Movement?.Flip();
+        if (CollisionSenses.EntityMin || CollisionSenses.EntityMax) 
         {
             stateMachine.ChangeState(entity.DetectedState);
         } 
-        else if (!entity.Core.CollisionSenses.EntityMin || !entity.Core.CollisionSenses.EntityMax)
+        else if (!CollisionSenses.EntityMin || !CollisionSenses.EntityMax)
         {
-            yield return new WaitForSeconds(entityData.timeBetweenTurns);
-            entity.Core.Movement.Flip();
-            if (entity.Core.CollisionSenses.EntityMin || entity.Core.CollisionSenses.EntityMax)
+            if (CollisionSenses.EntityMin || CollisionSenses.EntityMax)
             {
                 stateMachine.ChangeState(entity.DetectedState);
-            } 
-            else if (!entity.Core.CollisionSenses.EntityMin && !entity.Core.CollisionSenses.EntityMax)
+            }
+            yield return new WaitForSeconds(entityData.timeBetweenTurns);
+            if (CollisionSenses.EntityMin || CollisionSenses.EntityMax)
             {
-                stateMachine.ChangeState(entity.IdleState);
+                stateMachine.ChangeState(entity.DetectedState);
+            }
+            else if (!CollisionSenses.EntityMin || !CollisionSenses.EntityMax)
+            {
+                Movement?.Flip();
+                if (CollisionSenses.EntityMin || CollisionSenses.EntityMax)
+                {
+                    stateMachine.ChangeState(entity.DetectedState);
+                }
+                else if (!CollisionSenses.EntityMin && !CollisionSenses.EntityMax)
+                {
+                    stateMachine.ChangeState(entity.IdleState);
+                }
             }
         } 
 

@@ -18,7 +18,7 @@ public class EntityIdleState : EntityGroundedState
     {
         base.Enter();
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
 
         isIdleTimeOver = false;
         SetRandomIdleTime();
@@ -34,9 +34,9 @@ public class EntityIdleState : EntityGroundedState
             entity.Core.Movement.Flip();
         }
         */
-        if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.LedgeVertical)
+        if (CollisionSenses.Wall || !CollisionSenses.LedgeVertical)
         {
-            entity.Core.Movement.Flip();
+            Movement?.Flip();
         }
     }
 
@@ -46,11 +46,15 @@ public class EntityIdleState : EntityGroundedState
 
         if (Time.time >= startTime + idleTime) isIdleTimeOver = true;
 
-        core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
 
         if (isIdleTimeOver)
         {
             stateMachine.ChangeState(entity.MoveState);
+        }
+        if (CollisionSenses.EntityMax && entity.Behavior == "agressive")
+        {
+            stateMachine.ChangeState(entity.DetectedState);
         }
 
     }

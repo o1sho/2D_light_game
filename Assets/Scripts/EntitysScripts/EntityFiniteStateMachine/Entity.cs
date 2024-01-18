@@ -30,7 +30,7 @@ public class Entity : MonoBehaviour
 
     [SerializeField] private SO_EntityData entityData;
 
-    [SerializeField] private Transform attackPosition;
+    //[SerializeField] private Transform attackPosition;
 
     #endregion
 

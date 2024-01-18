@@ -30,7 +30,7 @@ public class EntityTakingDamageState : EntityAbilityState
     {
         base.Enter();
 
-        entity.Core.Movement.SetVelocityX(0f);
+        Movement?.SetVelocityX(0f);
         isTakingDamageTimeOver = false;
         SetRandomTakingDamageTime();
     }
@@ -39,7 +39,7 @@ public class EntityTakingDamageState : EntityAbilityState
     {
         base.Exit();
 
-        entity.Core.Combat.Damaged = false;
+        Combat.Damaged = false;
     }
 
     public override void LogicUpdate()
@@ -48,13 +48,10 @@ public class EntityTakingDamageState : EntityAbilityState
 
         if (Time.time >= startTime + takingDamageTime) isTakingDamageTimeOver = true;
 
-        entity.Core.Movement.SetVelocityX(0);
+        Movement?.SetVelocityX(0);
 
-        if (isTakingDamageTimeOver && !entity.Core.CollisionSenses.EntityMin && !entity.Core.CollisionSenses.EntityMax)
-        {
-            stateMachine.ChangeState(entity.LookForPlayerState);
-        }
-        else if (isTakingDamageTimeOver)
+
+        if (isTakingDamageTimeOver)
         {
             stateMachine.ChangeState(entity.DetectedState);
         }

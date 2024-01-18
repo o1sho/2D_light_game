@@ -32,22 +32,23 @@ public class EntityChargeState : EntityGroundedState
     {
         base.LogicUpdate();
 
-        entity.Core.Movement.SetVelocityX(entityData.chargeSpeed * entity.Core.Movement.FacingDirection);
+        Movement?.SetVelocityX(entityData.chargeSpeed * Movement.FacingDirection);
 
         if (Time.time >= startTime + entityData.chargeTime)
         {
             isChargeTimeOver = true;
         }
 
-        if (entity.Core.CollisionSenses.EntityMin)
+        if (CollisionSenses.EntityMin)
         {
             stateMachine.ChangeState(entity.MeleeAttackState);
         }
-        else if (entity.Core.CollisionSenses.Wall || !entity.Core.CollisionSenses.Ground)
+        else if (CollisionSenses.Wall || !CollisionSenses.LedgeVertical)
         {
             stateMachine.ChangeState(entity.IdleState);
+            Debug.Log("ya durak");
         }
-        else if (isChargeTimeOver && !entity.Core.CollisionSenses.EntityMax)
+        else if (isChargeTimeOver && !CollisionSenses.EntityMax)
         {
             stateMachine.ChangeState(entity.LookForPlayerState);
         }

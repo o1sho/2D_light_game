@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class CollisionSenses : CoreComponent
 {
+    //CoreComponents
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+    //
+
     #region Check Transforms
 
     public Transform GroundCheck 
@@ -82,12 +90,12 @@ public class CollisionSenses : CoreComponent
 
     public bool Wall
     {
-        get => Physics2D.Raycast(WallCheck.position, Vector2.right * core.Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(WallCheck.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
     }
 
     public bool LedgeHorizontal
     {
-        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * core.Movement.FacingDirection, wallCheckDistance, whatIsGround);
+        get => Physics2D.Raycast(LedgeCheckHorizontal.position, Vector2.right * Movement.FacingDirection, wallCheckDistance, whatIsGround);
     }
     public bool LedgeVertical
     {
@@ -96,12 +104,12 @@ public class CollisionSenses : CoreComponent
 
     public bool EntityMax
     {
-        get => Physics2D.Raycast(EntityCheckMax.position, Vector2.right * core.Movement.FacingDirection, entityCheckMaxDistance, whatIsEntity);
+        get => Physics2D.Raycast(EntityCheckMax.position, Vector2.right * Movement.FacingDirection, entityCheckMaxDistance, whatIsEntity);
     }
 
     public bool EntityMin
     {
-        get => Physics2D.Raycast(EntityCheckMin.position, Vector2.right * core.Movement.FacingDirection, entityCheckMinDistance, whatIsEntity);
+        get => Physics2D.Raycast(EntityCheckMin.position, Vector2.right * Movement.FacingDirection, entityCheckMinDistance, whatIsEntity);
     }
 
 

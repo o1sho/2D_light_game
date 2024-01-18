@@ -11,6 +11,8 @@ public class CoreComponent : MonoBehaviour
         core = transform.parent.GetComponent<Core>();
 
         if (core == null) { Debug.LogError("No Core on the parent"); }
+        core.AddComponent(this);
     }
 
+    public virtual void LogicUpdate() { }
 }

@@ -4,10 +4,34 @@ using UnityEngine;
 
 public class PlayerInAirState : PlayerState
 {
+    //Inputs
     private int xInput;
     private bool jumpInput;
     private bool grabInput;
     private bool coyoteTime;
+    //
+
+    //Checks
+    private bool isGrounded;
+    private bool isTouchingWall;
+    private bool isTouchingLedgeHorizontal;
+    //
+
+
+    //CoreComponents
+    protected Movement Movement
+    {
+        get => movement ??= core.GetCoreComponent<Movement>();
+    }
+    private Movement movement;
+
+    private CollisionSenses CollisionSenses
+    {
+        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
+    }
+    private CollisionSenses collisionSenses;
+    //
+
 
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, SO_PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
@@ -17,7 +41,14 @@ public class PlayerInAirState : PlayerState
     {
         base.DoChecks();
 
-        if (player.Core.CollisionSenses.Wall && !player.Core.CollisionSenses.LedgeHorizontal)
+        if (CollisionSenses)
+        {
+            isGrounded = CollisionSenses.Ground;
+            isTouchingWall = CollisionSenses.Wall;
+            isTouchingLedgeHorizontal = CollisionSenses.LedgeHorizontal;
+        }
+
+        if (isTouchingWall && !isTouchingLedgeHorizontal)
         {
             player.LedgeClimbState.SetDetectedPosition(player.transform.position);
         }
@@ -54,11 +85,11 @@ public class PlayerInAirState : PlayerState
             stateMachine.ChangeState(player.SecondaryAttackState);
         }
 
-        else if (player.Core.CollisionSenses.Ground && core.Movement.CurrentVelocity.y < 0.01f)
+        else if (isGrounded && Movement.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }
-        else if (player.Core.CollisionSenses.Wall && !player.Core.CollisionSenses.LedgeHorizontal && !player.Core.CollisionSenses.Ground)
+        else if (isTouchingWall && !isTouchingLedgeHorizontal && !isGrounded)
         {
             stateMachine.ChangeState(player.LedgeClimbState);
         }
@@ -67,21 +98,21 @@ public class PlayerInAirState : PlayerState
             player.InputHandler.UseJumpInput();/////
             stateMachine.ChangeState(player.JumpState);
         }
-        else if (player.Core.CollisionSenses.Wall && grabInput && player.Core.CollisionSenses.LedgeHorizontal)
+        else if (isTouchingWall && grabInput && isTouchingLedgeHorizontal)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
-        else if (player.Core.CollisionSenses.Wall && xInput == core.Movement.FacingDirection && core.Movement.CurrentVelocity.y <= 0)
+        else if (isTouchingWall && xInput == Movement.FacingDirection && Movement.CurrentVelocity.y <= 0)
         {
             stateMachine.ChangeState(player.WallSlideState);
         } 
         else
         {
-            core.Movement.CheckItShouldFlip(xInput);
-            core.Movement.SetVelocityX(playerData.movementVelocity * xInput);
+            Movement?.CheckItShouldFlip(xInput);
+            Movement?.SetVelocityX(playerData.movementVelocity * xInput);
 
-            player.Animator.SetFloat("yVelocity", core.Movement.CurrentVelocity.y);
-            player.Animator.SetFloat("xVelocity", Mathf.Abs(core.Movement.CurrentVelocity.x));
+            player.Animator.SetFloat("yVelocity", Movement.CurrentVelocity.y);
+            player.Animator.SetFloat("xVelocity", Mathf.Abs(Movement.CurrentVelocity.x));
         }
     }
 

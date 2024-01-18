@@ -21,3 +21,5 @@ MonoBehaviour:
   chargeTime: 1
   amountOfTurns: 2
   timeBetweenTurns: 1
+  strength: 10
+  angle: {x: 2, y: 2}
