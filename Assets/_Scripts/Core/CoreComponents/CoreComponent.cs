@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoreComponent : MonoBehaviour
+namespace Oisho.CoreSystem
 {
-    protected Core core;
-
-    protected virtual void Awake()
+    public class CoreComponent : MonoBehaviour
     {
-        core = transform.parent.GetComponent<Core>();
+        protected Core core;
 
-        if (core == null) { Debug.LogError("No Core on the parent"); }
-        core.AddComponent(this);
+        protected virtual void Awake()
+        {
+            core = transform.parent.GetComponent<Core>();
+
+            if (core == null) { Debug.LogError("No Core on the parent"); }
+            core.AddComponent(this);
+        }
+
+        public virtual void LogicUpdate() { }
     }
-
-    public virtual void LogicUpdate() { }
 }
+

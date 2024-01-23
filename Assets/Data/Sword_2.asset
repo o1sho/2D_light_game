@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db4f70ce4759f1439d72d0ca5dfd329, type: 3}
+  m_Name: Sword_2
+  m_EditorClassIdentifier: 
+  <NumberOfAttacks>k__BackingField: 3
+  <ComponentData>k__BackingField:
+  - rid: 8386568348834725893
+  - rid: 8386568348834725895
+  references:
+    version: 2
+    RefIds:
+    - rid: 8386568348834725893
+      type: {class: WeaponSpriteData, ns: Oisho.Weapons, asm: Assembly-CSharp}
+      data:
+        <AttackData>k__BackingField:
+        - <Sprites>k__BackingField:
+          - {fileID: 1694890403, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 1907973178, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: -1524049058, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: -1350987052, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 846600796, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+        - <Sprites>k__BackingField:
+          - {fileID: -799115515, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 23488584, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 1618989148, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 1716837161, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: -1748858289, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+        - <Sprites>k__BackingField:
+          - {fileID: -1667314724, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: -717645254, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 509119274, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 1316943215, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+          - {fileID: 365705000, guid: 4e1cfd32c1abaef4d82bc4aa25c80f0a, type: 3}
+    - rid: 8386568348834725895
+      type: {class: MovementData, ns: Oisho.Weapons, asm: Assembly-CSharp}
+      data:
+        <AttackData>k__BackingField:
+        - <Direction>k__BackingField: {x: 1, y: 0}
+          <Velocity>k__BackingField: 3
+        - <Direction>k__BackingField: {x: 1, y: 0}
+          <Velocity>k__BackingField: 4
+        - <Direction>k__BackingField: {x: 1, y: 5}
+          <Velocity>k__BackingField: 5

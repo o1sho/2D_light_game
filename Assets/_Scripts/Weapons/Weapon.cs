@@ -3,26 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Oisho.Utilities;
+using Oisho.CoreSystem;
+
 
 namespace Oisho.Weapons
 {
     public class Weapon : MonoBehaviour
     {
-        [SerializeField] private int numberOfAttacks;
+        [field: SerializeField] public WeaponDataSO Data { get; private set; }
         [SerializeField] private float attackCounterResetCooldown;
 
         public int CurrentAttackCounter
         {
             get => currentAttackCounter;
-            private set => currentAttackCounter = value >= numberOfAttacks ? 0 : value;
+            private set => currentAttackCounter = value >= Data.NumberOfAttacks ? 0 : value;
         }
 
+        public event Action OnEnter;
         public event Action OnExit;
 
         private Animator anim;
-        private GameObject baseGameObject;
+        public GameObject BaseGameObject { get; private set; }
+        public GameObject WeaponSpriteGameObject { get; private set; }
 
-        private AnimationEventHandler eventHandler;
+        public AnimationEventHandler EventHandler { get; private set; }
+
+        public Core Core { get; private set; }
 
         private int currentAttackCounter;
 
@@ -36,6 +42,13 @@ namespace Oisho.Weapons
 
             anim.SetBool("active", true);
             anim.SetInteger("counter", CurrentAttackCounter);
+
+            OnEnter?.Invoke();
+        }
+
+        public void SetCore(Core core)
+        {
+            Core= core;
         }
 
         private void Exit()
@@ -50,10 +63,11 @@ namespace Oisho.Weapons
 
         private void Awake()
         {
-            baseGameObject = transform.Find("Base").gameObject;
-            anim = baseGameObject.GetComponent<Animator>();
+            BaseGameObject = transform.Find("Base").gameObject;
+            WeaponSpriteGameObject = transform.Find("WeaponSprite").gameObject;
+            anim = BaseGameObject.GetComponent<Animator>();
 
-            eventHandler = baseGameObject.GetComponent<AnimationEventHandler>();
+            EventHandler = BaseGameObject.GetComponent<AnimationEventHandler>();
 
             attackCounterResetTimer = new Timer(attackCounterResetCooldown);
         }
@@ -67,13 +81,13 @@ namespace Oisho.Weapons
 
         private void OnEnable()
         {
-            eventHandler.OnFinished += Exit;
+            EventHandler.OnFinished += Exit;
             attackCounterResetTimer.OnTimerDone += ResetAttackCounter;
         }
 
         private void OnDisable()
         {
-            eventHandler.OnFinished -= Exit;
+            EventHandler.OnFinished -= Exit;
             attackCounterResetTimer.OnTimerDone -= ResetAttackCounter;
         }
     }
