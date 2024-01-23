@@ -35,8 +35,9 @@ namespace Oisho.CoreSystem
         #region Set Functions
         public void SetVelocityZero()
         {
-            Rigidbody.velocity = Vector2.zero;
-            CurrentVelocity = Vector2.zero;
+            workspace= Vector2.zero;
+            //Rigidbody.velocity = Vector2.zero;
+            //CurrentVelocity = Vector2.zero;
             SetFinalVelocity();
         }
 
