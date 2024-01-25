@@ -23,7 +23,7 @@ MonoBehaviour:
     - rid: 8386568348834725892
       type: {class: WeaponSpriteData, ns: Oisho.Weapons, asm: Assembly-CSharp}
       data:
-        <AttackData>k__BackingField:
+        attackData:
         - <Sprites>k__BackingField:
           - {fileID: -1865140422, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: -629050948, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
@@ -45,7 +45,7 @@ MonoBehaviour:
     - rid: 8386568348834725894
       type: {class: MovementData, ns: Oisho.Weapons, asm: Assembly-CSharp}
       data:
-        <AttackData>k__BackingField:
+        attackData:
         - <Direction>k__BackingField: {x: 1, y: 0}
           <Velocity>k__BackingField: 1
         - <Direction>k__BackingField: {x: 1, y: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
     - rid: 8386568405579726849
       type: {class: ActionHitBoxData, ns: Oisho.Weapons, asm: Assembly-CSharp}
       data:
-        <AttackData>k__BackingField:
+        attackData:
         - Debug: 0
           <HitBox>k__BackingField:
             serializedVersion: 2
