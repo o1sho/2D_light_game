@@ -10,4 +10,10 @@ namespace Oisho.Weapons
     {
 
     }
+
+    [Serializable]
+    public class ComponentData<T> : ComponentData where T : AttackData
+    {
+        [field: SerializeField] public T[] AttackData { get; private set; }
+    }
 }

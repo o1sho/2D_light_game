@@ -5,14 +5,12 @@ using UnityEngine;
 
 namespace Oisho.Weapons
 {
-    public class WeaponSprite : WeaponComponent
+    public class WeaponSprite : WeaponComponent<WeaponSpriteData, AttackSprites>
     {
         private SpriteRenderer baseSpriteRenderer;
         private SpriteRenderer weaponSpriteRenderer;
 
         private int currentWeaponSpriteIndex;
-
-        private WeaponSpriteData data;
 
         protected override void HandleEnter()
         {
@@ -29,7 +27,7 @@ namespace Oisho.Weapons
                 return;
             }
 
-            var currentAttackSprites = data.AttackData[weapon.CurrentAttackCounter].Sprites;
+            var currentAttackSprites = currentAttackData.Sprites;
 
             if (currentWeaponSpriteIndex >= currentAttackSprites.Length)
             {
@@ -48,8 +46,6 @@ namespace Oisho.Weapons
 
             baseSpriteRenderer = transform.Find("Base").GetComponent<SpriteRenderer>();
             weaponSpriteRenderer = transform.Find("WeaponSprite").GetComponent<SpriteRenderer>();
-
-            data = weapon.Data.GetData<WeaponSpriteData>();
 
             //
             //baseSpriteRenderer = weapon.BaseGameObject.GetComponent<SpriteRenderer>();

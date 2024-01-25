@@ -18,6 +18,7 @@ namespace Oisho.Weapons
             get => currentAttackCounter;
             private set => currentAttackCounter = value >= Data.NumberOfAttacks ? 0 : value;
         }
+        private int currentAttackCounter;
 
         public event Action OnEnter;
         public event Action OnExit;
@@ -29,8 +30,6 @@ namespace Oisho.Weapons
         public AnimationEventHandler EventHandler { get; private set; }
 
         public Core Core { get; private set; }
-
-        private int currentAttackCounter;
 
         private Timer attackCounterResetTimer;
 

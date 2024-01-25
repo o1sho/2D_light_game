@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Oisho.Weapons
 {
-    public class WeaponSpriteData : ComponentData
+    public class WeaponSpriteData : ComponentData<AttackSprites>
     {
-        [field: SerializeField] public AttackSprites[] AttackData { get; private set; }
+
     }
 }

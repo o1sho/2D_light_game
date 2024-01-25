@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Oisho.Weapons
 {
-    public class MovementData : ComponentData
+    public class MovementData : ComponentData<AttackMovement>
     {
-        [field: SerializeField] public AttackMovement[] AttackData { get; private set; }
+
     }
 }
