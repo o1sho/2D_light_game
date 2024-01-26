@@ -21,7 +21,7 @@ public class EntityMeleeAttackState : EntityAbilityState
     {
         base.AnimationTrigger();
 
-        TriggerAttack();
+        DamageSource?.TriggerAttack();
     }
 
     public override void Enter()
@@ -44,25 +44,5 @@ public class EntityMeleeAttackState : EntityAbilityState
 
     }
 
-    private void TriggerAttack()
-    {
 
-        Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(Combat.AttackPosition.position, Combat.AttackRadius, Combat.WhatIsEnemy);
-
-        foreach (Collider2D collider in detectedObjects)
-        {
-            IDamageable damageable = collider.GetComponentInChildren<IDamageable>();
-            IKnockbackable knockbackable = collider.GetComponentInChildren<IKnockbackable>();
-
-            if (damageable != null)
-            {
-                damageable.TakingDamage(Combat.AttackDamage);
-            }
-
-            if (knockbackable != null)
-            {
-                knockbackable.Knockback(entityData.angle, entityData.strength, Movement.FacingDirection);
-            }
-        }
-    }
 }

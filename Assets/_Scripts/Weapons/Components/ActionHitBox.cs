@@ -8,7 +8,7 @@ namespace Oisho.Weapons
 {
     public class ActionHitBox : WeaponComponent<ActionHitBoxData, AttackActionHitBox>
     {
-        private event Action<Collider2D[]> OnDetectedCollider2D;
+        public event Action<Collider2D[]> OnDetectedCollider2D;
 
         private CoreComp<CoreSystem.Movement> movement;
 
@@ -31,11 +31,6 @@ namespace Oisho.Weapons
             }
 
             OnDetectedCollider2D?.Invoke(detected);
-
-            foreach(var item in detected)
-            {
-                Debug.Log(item.name);
-            }
         }
 
         protected override void Start()

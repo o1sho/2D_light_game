@@ -52,6 +52,7 @@ public class Entity : MonoBehaviour
 
         StateMachine = new EntityStateMachine(); //
 
+
         IdleState = new EntityIdleState(this, StateMachine, "idle", entityData);
         MoveState = new EntityMoveState(this, StateMachine, "move", entityData);
         TakingDamageState = new EntityTakingDamageState(this, StateMachine, "takingDamage", entityData);

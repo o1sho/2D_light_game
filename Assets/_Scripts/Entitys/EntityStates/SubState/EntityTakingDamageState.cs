@@ -1,3 +1,4 @@
+using Oisho.CoreSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,7 +40,7 @@ public class EntityTakingDamageState : EntityAbilityState
     {
         base.Exit();
 
-        Combat.Damaged = false;
+        TakingDamageReceiver.Damaged = false;
     }
 
     public override void LogicUpdate()

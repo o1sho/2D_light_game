@@ -17,26 +17,31 @@ MonoBehaviour:
   - rid: 8386568348834725892
   - rid: 8386568348834725894
   - rid: 8386568405579726849
+  - rid: 8386568430371995648
   references:
     version: 2
     RefIds:
     - rid: 8386568348834725892
       type: {class: WeaponSpriteData, ns: Oisho.Weapons, asm: Assembly-CSharp}
       data:
+        name: WeaponSpriteData
         attackData:
-        - <Sprites>k__BackingField:
+        - name: 
+          <Sprites>k__BackingField:
           - {fileID: -1865140422, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: -629050948, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: 998473571, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: 268277497, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: -736901224, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
-        - <Sprites>k__BackingField:
+        - name: 
+          <Sprites>k__BackingField:
           - {fileID: -453497934, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: 2027472931, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: 1555707281, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: 514456034, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: 1595059260, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
-        - <Sprites>k__BackingField:
+        - name: 
+          <Sprites>k__BackingField:
           - {fileID: 2074416278, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: 1478282788, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
           - {fileID: -1820528415, guid: 16d7581ec597bfb4f8dd72f543fa73dc, type: 3}
@@ -45,32 +50,40 @@ MonoBehaviour:
     - rid: 8386568348834725894
       type: {class: MovementData, ns: Oisho.Weapons, asm: Assembly-CSharp}
       data:
+        name: MovementData
         attackData:
-        - <Direction>k__BackingField: {x: 1, y: 0}
+        - name: 
+          <Direction>k__BackingField: {x: 1, y: 0}
           <Velocity>k__BackingField: 1
-        - <Direction>k__BackingField: {x: 1, y: 0}
+        - name: 
+          <Direction>k__BackingField: {x: 1, y: 0}
           <Velocity>k__BackingField: 2
-        - <Direction>k__BackingField: {x: 1, y: 5}
+        - name: 
+          <Direction>k__BackingField: {x: 1, y: 5}
           <Velocity>k__BackingField: 4
     - rid: 8386568405579726849
       type: {class: ActionHitBoxData, ns: Oisho.Weapons, asm: Assembly-CSharp}
       data:
+        name: ActionHitBoxData
         attackData:
-        - Debug: 0
+        - name: 
+          Debug: 0
           <HitBox>k__BackingField:
             serializedVersion: 2
             x: 0.13
             y: -0.93
             width: 1.76
             height: 1.36
-        - Debug: 0
+        - name: 
+          Debug: 0
           <HitBox>k__BackingField:
             serializedVersion: 2
             x: 0.13
             y: -0.93
             width: 1.76
             height: 1.36
-        - Debug: 0
+        - name: 
+          Debug: 0
           <HitBox>k__BackingField:
             serializedVersion: 2
             x: 0.13
@@ -80,3 +93,14 @@ MonoBehaviour:
         <DetectableLayers>k__BackingField:
           serializedVersion: 2
           m_Bits: 128
+    - rid: 8386568430371995648
+      type: {class: DamageData, ns: Oisho.Weapons, asm: Assembly-CSharp}
+      data:
+        name: DamageData
+        attackData:
+        - name: Attack 1
+          <Amount>k__BackingField: 5
+        - name: Attack 2
+          <Amount>k__BackingField: 10
+        - name: Attack 3
+          <Amount>k__BackingField: 15

@@ -5,23 +5,17 @@ public class EntityGroundedState : EntityState
 {
 
     //CoreComponents
-    protected Movement Movement
-    {
-        get => movement ??= core.GetCoreComponent<Movement>();
-    }
     private Movement movement;
+    protected Movement Movement => movement ?? core.GetCoreComponent<Movement>();
 
-    protected CollisionSenses CollisionSenses
-    {
-        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
-    }
     private CollisionSenses collisionSenses;
+    protected CollisionSenses CollisionSenses => collisionSenses ?? core.GetCoreComponent<CollisionSenses>();
 
-    private Combat Combat
-    {
-        get => combat ??= core.GetCoreComponent<Combat>();
-    }
-    private Combat combat;
+    private TakingDamageReceiver takingDamageReceiver;
+    protected TakingDamageReceiver TakingDamageReceiver => takingDamageReceiver ?? core.GetCoreComponent<TakingDamageReceiver>();
+
+    private DamageSource damageSource;
+    protected DamageSource DamageSource => damageSource ?? core.GetCoreComponent<DamageSource>();
     //
 
 
@@ -39,7 +33,7 @@ public class EntityGroundedState : EntityState
     {
         base.LogicUpdate();
 
-        if (Combat.Damaged)
+        if (TakingDamageReceiver.Damaged)
         {
             stateMachine.ChangeState(entity.TakingDamageState);
         }

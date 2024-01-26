@@ -8,28 +8,23 @@ public class EntityAbilityState : EntityState
     protected bool isAbilityDone;
 
     //CoreComponents
-    protected Movement Movement
-    {
-        get => movement ??= core.GetCoreComponent<Movement>();
-    }
     private Movement movement;
+    protected Movement Movement => movement ?? core.GetCoreComponent<Movement>();
 
-    private CollisionSenses CollisionSenses
-    {
-        get => collisionSenses ??= core.GetCoreComponent<CollisionSenses>();
-    }
     private CollisionSenses collisionSenses;
+    protected CollisionSenses CollisionSenses => collisionSenses ?? core.GetCoreComponent<CollisionSenses>();
 
-    protected Combat Combat
-    {
-        get => combat ??= core.GetCoreComponent<Combat>();
-    }
-    private Combat combat;
+    private TakingDamageReceiver takingDamageReceiver;
+    protected TakingDamageReceiver TakingDamageReceiver => takingDamageReceiver ?? core.GetCoreComponent<TakingDamageReceiver>();
+
+    private DamageSource damageSource;
+    protected DamageSource DamageSource => damageSource ?? core.GetCoreComponent<DamageSource>();
     //
 
     public EntityAbilityState(Entity entity, EntityStateMachine stateMachine, string animBoolName, SO_EntityData entityData) : base(entity, stateMachine, animBoolName, entityData)
     {
     }
+
     public override void DoChecks()
     {
         base.DoChecks();
@@ -56,7 +51,7 @@ public class EntityAbilityState : EntityState
             stateMachine.ChangeState(entity.MoveState);
         }
 
-        if (Combat.Damaged)
+        if (TakingDamageReceiver.Damaged)
         {
             stateMachine.ChangeState(entity.TakingDamageState);
         }
