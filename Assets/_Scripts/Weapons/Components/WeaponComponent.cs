@@ -15,6 +15,10 @@ namespace Oisho.Weapons
 
         protected bool isAttackActive;
 
+        public virtual void Init()
+        {
+
+        }
 
         protected virtual void Awake()
         {
@@ -25,7 +29,8 @@ namespace Oisho.Weapons
 
         protected virtual void Start()
         {
-
+            weapon.OnEnter += HandleEnter;
+            weapon.OnExit += HandleExit;
         }
 
 
@@ -39,13 +44,8 @@ namespace Oisho.Weapons
             isAttackActive= false;
         }
 
-        protected virtual void OnEnable()
-        {
-            weapon.OnEnter += HandleEnter;
-            weapon.OnExit += HandleExit;
-        }
 
-        protected virtual void OnDisable()
+        protected virtual void OnDestroy()
         {
             weapon.OnEnter -= HandleExit;
             weapon.OnExit -= HandleExit;
@@ -64,9 +64,9 @@ namespace Oisho.Weapons
             currentAttackData = data.AttackData[weapon.CurrentAttackCounter];
         }
 
-        protected override void Awake()
+        public override void Init()
         {
-            base.Awake();
+            base.Init();
 
             data = weapon.Data.GetData<T1>();
         }

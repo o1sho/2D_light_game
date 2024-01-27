@@ -18,6 +18,7 @@ MonoBehaviour:
   - rid: 8386568348834725894
   - rid: 8386568405579726849
   - rid: 8386568430371995648
+  - rid: 8386568430371995650
   references:
     version: 2
     RefIds:
@@ -104,3 +105,17 @@ MonoBehaviour:
           <Amount>k__BackingField: 10
         - name: Attack 3
           <Amount>k__BackingField: 15
+    - rid: 8386568430371995650
+      type: {class: KnockBackData, ns: Oisho.Weapons, asm: Assembly-CSharp}
+      data:
+        name: KnockBackData
+        attackData:
+        - name: Attack 1
+          <Angle>k__BackingField: {x: 1, y: 1}
+          <Strenght>k__BackingField: 1
+        - name: Attack 2
+          <Angle>k__BackingField: {x: 1, y: 1}
+          <Strenght>k__BackingField: 2
+        - name: Attack 3
+          <Angle>k__BackingField: {x: 1, y: 3}
+          <Strenght>k__BackingField: 3

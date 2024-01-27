@@ -6,17 +6,22 @@ using UnityEngine;
 namespace Oisho.Weapons
 {
     [Serializable]
-    public class ComponentData
+    public abstract class ComponentData
     {
         [SerializeField, HideInInspector] private string name;
+
+        public Type ComponentDependency { get; protected set; }
 
         public ComponentData()
         {
             SetComponentName();
+            SetComponentDependency();
         }
 
 
         public void SetComponentName() => name = GetType().Name;
+
+        protected abstract void SetComponentDependency();
 
         public virtual void SetAttackDataNames() { }
 
@@ -24,7 +29,7 @@ namespace Oisho.Weapons
     }
 
     [Serializable]
-    public class ComponentData<T> : ComponentData where T : AttackData
+    public abstract class ComponentData<T> : ComponentData where T : AttackData
     {
         [SerializeField] private T[] attackData;
         public T[] AttackData { get => attackData; private set => attackData = value; }
