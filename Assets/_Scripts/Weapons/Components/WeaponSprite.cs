@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Oisho.Weapons
@@ -12,11 +13,20 @@ namespace Oisho.Weapons
 
         private int currentWeaponSpriteIndex;
 
+        private Sprite[] currentPhaseSprites;
+
         protected override void HandleEnter()
         {
             base.HandleEnter();
 
             currentWeaponSpriteIndex = 0;
+        }
+
+        private void HandleEnterAttackPhase(AttackPhases phase)
+        {
+            currentWeaponSpriteIndex = 0;
+
+            currentPhaseSprites = currentAttackData.PhaseSprites.FirstOrDefault(data => data.Phase == phase).Sprites;
         }
 
         private void HandleBaseSpriteChange(SpriteRenderer sr)
@@ -27,15 +37,13 @@ namespace Oisho.Weapons
                 return;
             }
 
-            var currentAttackSprites = currentAttackData.Sprites;
-
-            if (currentWeaponSpriteIndex >= currentAttackSprites.Length)
+            if (currentWeaponSpriteIndex >= currentPhaseSprites.Length)
             {
                 Debug.LogWarning($"{weapon.name} weapon sprites length mismatch");
                 return;
             }
 
-            weaponSpriteRenderer.sprite = currentAttackSprites[currentWeaponSpriteIndex];
+            weaponSpriteRenderer.sprite = currentPhaseSprites[currentWeaponSpriteIndex];
 
             currentWeaponSpriteIndex++;
         }
@@ -50,6 +58,8 @@ namespace Oisho.Weapons
             data = weapon.Data.GetData<WeaponSpriteData>();
 
             baseSpriteRenderer.RegisterSpriteChangeCallback(HandleBaseSpriteChange);
+
+            eventHandler.OnEnterAttackPhase += HandleEnterAttackPhase;
         }
 
         protected override void OnDestroy()
@@ -57,6 +67,8 @@ namespace Oisho.Weapons
             base.OnDestroy();
 
             baseSpriteRenderer.UnregisterSpriteChangeCallback(HandleBaseSpriteChange);
+
+            eventHandler.OnEnterAttackPhase -= HandleEnterAttackPhase;
 
             //weapon.OnEnter -= HandleEnter; 
         }

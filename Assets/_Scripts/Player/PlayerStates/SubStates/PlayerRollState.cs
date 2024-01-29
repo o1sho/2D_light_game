@@ -21,6 +21,8 @@ public class PlayerRollState : PlayerAbilityState
     public override void Exit()
     {
         base.Exit();
+
+        Movement?.SetVelocityZero();
     }
 
     public override void LogicUpdate()

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db4f70ce4759f1439d72d0ca5dfd329, type: 3}
+  m_Name: Bow_1
+  m_EditorClassIdentifier: 
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: b634ee76444f7ed4182598f10002198c, type: 2}
+  <NumberOfAttacks>k__BackingField: 1
+  <ComponentData>k__BackingField:
+  - rid: 8386568487564214272
+  references:
+    version: 2
+    RefIds:
+    - rid: 8386568487564214272
+      type: {class: WeaponSpriteData, ns: Oisho.Weapons, asm: Assembly-CSharp}
+      data:
+        name: WeaponSpriteData
+        attackData:
+        - name: Attack 1
+          <PhaseSprites>k__BackingField:
+          - <Phase>k__BackingField: 0
+            <Sprites>k__BackingField:
+            - {fileID: 1296893063, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
+            - {fileID: 1633889653, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
+          - <Phase>k__BackingField: 1
+            <Sprites>k__BackingField:
+            - {fileID: 1633889653, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
+          - <Phase>k__BackingField: 2
+            <Sprites>k__BackingField:
+            - {fileID: -53359692, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
+            - {fileID: 67909203, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
+            - {fileID: 32464989, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
+            - {fileID: 1962278124, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}

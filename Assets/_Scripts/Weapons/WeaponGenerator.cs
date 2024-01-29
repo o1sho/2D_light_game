@@ -15,8 +15,11 @@ namespace Oisho.Weapons
         private List<WeaponComponent> componentsAddedToWeapon= new List<WeaponComponent>();
         private List<Type> componentDependencies = new List<Type>();
 
+        private Animator anim;
+
         private void Start()
         {
+            anim = GetComponentInChildren<Animator>();
             GenerateWeapon(data);
         }
 
@@ -56,6 +59,8 @@ namespace Oisho.Weapons
             {
                 Destroy(weaponComponent);
             }
+
+            anim.runtimeAnimatorController = data.AnimatorController;
         }
     }
 }

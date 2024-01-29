@@ -10,6 +10,8 @@ namespace Oisho.Weapons
 {
     public class Weapon : MonoBehaviour
     {
+        public event Action<bool> OnCurrentInputChange;
+
         public WeaponDataSO Data { get; private set; }
         [SerializeField] private float attackCounterResetCooldown;
 
@@ -19,6 +21,20 @@ namespace Oisho.Weapons
             private set => currentAttackCounter = value >= Data.NumberOfAttacks ? 0 : value;
         }
         private int currentAttackCounter;
+
+        public bool CurrentInput
+        {
+            get => currentInput;
+            set
+            {
+                if (currentInput != value)
+                {
+                    currentInput = value;
+                    OnCurrentInputChange?.Invoke(currentInput);
+                }
+            }
+        }
+        private bool currentInput;
 
         public event Action OnEnter;
         public event Action OnExit;
