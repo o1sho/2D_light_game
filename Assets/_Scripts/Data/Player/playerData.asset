@@ -12,18 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670aa309a1b65e9459d34767113b8e87, type: 3}
   m_Name: playerData
   m_EditorClassIdentifier: 
-  movementVelocity: 8
-  jumpVelocity: 14
+  movementVelocity: 7
+  jumpVelocity: 11.1
   amountOfJumps: 1
-  rollVelocity: 9
+  rollVelocity: 7
   rollTime: 0.6
   coyoteTime: 0.08
   wallSlideVelocity: 2
   wallClimbVelocity: 3
   startOffset: {x: 0.35, y: 0.9}
   stopOffset: {x: 0.4, y: 0.75}
-  groundCheckRadius: 0.3
-  wallCheckDistance: 0.5
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
+  vitality: 1
+  stamina: 1
+  strength: 1
+  accuracy: 1

@@ -16,6 +16,7 @@ MonoBehaviour:
   <NumberOfAttacks>k__BackingField: 1
   <ComponentData>k__BackingField:
   - rid: 8386568487564214272
+  - rid: 8386568495254732800
   references:
     version: 2
     RefIds:
@@ -39,3 +40,7 @@ MonoBehaviour:
             - {fileID: 67909203, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
             - {fileID: 32464989, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
             - {fileID: 1962278124, guid: 57d20354b581f79428f5f8b00217ed5b, type: 3}
+    - rid: 8386568495254732800
+      type: {class: InputHoldData, ns: Oisho.Weapons, asm: Assembly-CSharp}
+      data:
+        name: InputHoldData
