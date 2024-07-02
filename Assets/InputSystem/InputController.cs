@@ -98,6 +98,15 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FastMove"",
+                    ""type"": ""Button"",
+                    ""id"": ""6dfbf88e-0f87-4b43-b493-dbc7985b08b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -203,7 +212,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3bb15f3c-8de5-4416-835f-1a2a4a89dbbb"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Keyboard>/leftAlt"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
@@ -236,7 +245,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""06fcf2a1-e716-4645-baa0-e6d13e31bee1"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/leftAlt"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
@@ -298,6 +307,17 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                     ""action"": ""SecondaryAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0645791-85d6-43c4-ab42-4aa1b9be6a0c"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""FastMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -342,6 +362,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
         m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_PrimaryAttack = m_Player.FindAction("PrimaryAttack", throwIfNotFound: true);
         m_Player_SecondaryAttack = m_Player.FindAction("SecondaryAttack", throwIfNotFound: true);
+        m_Player_FastMove = m_Player.FindAction("FastMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -409,6 +430,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_PrimaryAttack;
     private readonly InputAction m_Player_SecondaryAttack;
+    private readonly InputAction m_Player_FastMove;
     public struct PlayerActions
     {
         private @InputController m_Wrapper;
@@ -421,6 +443,7 @@ public partial class @InputController : IInputActionCollection2, IDisposable
         public InputAction @Roll => m_Wrapper.m_Player_Roll;
         public InputAction @PrimaryAttack => m_Wrapper.m_Player_PrimaryAttack;
         public InputAction @SecondaryAttack => m_Wrapper.m_Player_SecondaryAttack;
+        public InputAction @FastMove => m_Wrapper.m_Player_FastMove;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -454,6 +477,9 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 @SecondaryAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAttack;
                 @SecondaryAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAttack;
                 @SecondaryAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryAttack;
+                @FastMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFastMove;
+                @FastMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFastMove;
+                @FastMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFastMove;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -482,6 +508,9 @@ public partial class @InputController : IInputActionCollection2, IDisposable
                 @SecondaryAttack.started += instance.OnSecondaryAttack;
                 @SecondaryAttack.performed += instance.OnSecondaryAttack;
                 @SecondaryAttack.canceled += instance.OnSecondaryAttack;
+                @FastMove.started += instance.OnFastMove;
+                @FastMove.performed += instance.OnFastMove;
+                @FastMove.canceled += instance.OnFastMove;
             }
         }
     }
@@ -514,5 +543,6 @@ public partial class @InputController : IInputActionCollection2, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnPrimaryAttack(InputAction.CallbackContext context);
         void OnSecondaryAttack(InputAction.CallbackContext context);
+        void OnFastMove(InputAction.CallbackContext context);
     }
 }

@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FastMove",
+                    "type": "Button",
+                    "id": "6dfbf88e-0f87-4b43-b493-dbc7985b08b5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -181,7 +190,7 @@
                 {
                     "name": "",
                     "id": "3bb15f3c-8de5-4416-835f-1a2a4a89dbbb",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/leftAlt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + Mouse",
@@ -214,7 +223,7 @@
                 {
                     "name": "",
                     "id": "06fcf2a1-e716-4645-baa0-e6d13e31bee1",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/leftAlt",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard + Mouse",
@@ -274,6 +283,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "SecondaryAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b0645791-85d6-43c4-ab42-4aa1b9be6a0c",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard + Mouse",
+                    "action": "FastMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

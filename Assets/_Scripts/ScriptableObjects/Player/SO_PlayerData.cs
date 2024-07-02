@@ -7,6 +7,7 @@ public class SO_PlayerData : ScriptableObject
 {
     [Header("Move State:")]
     public float movementVelocity = 10f;
+    public float fastMovementVelocity = 15f;
 
     [Header("Jump State:")]
     public float jumpVelocity = 15f;

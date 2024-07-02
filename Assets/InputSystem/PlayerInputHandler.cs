@@ -14,6 +14,7 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpInput { get; private set; }
     public bool RollInput { get; private set; }
     public bool GrabInput { get; private set; }
+    public bool FastMoveInput { get; private set; } // new
 
     public bool[] AttackInputs { get; private set; }
 
@@ -43,6 +44,19 @@ public class PlayerInputHandler : MonoBehaviour
 
         NormInputX = Mathf.RoundToInt(RawMovementInput.x);
         NormInputY = Mathf.RoundToInt(RawMovementInput.y);    
+    }
+
+    public void OnFastMoveInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            FastMoveInput = true;
+        }
+        
+        if (context.canceled)
+        {
+            FastMoveInput = false;
+        }
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)

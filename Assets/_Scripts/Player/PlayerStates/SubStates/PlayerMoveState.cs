@@ -37,6 +37,12 @@ public class PlayerMoveState : PlayerGroundedState
             {
                 stateMachine.ChangeState(player.IdleState);
             }
+
+            if (fastMoveInput)
+            {
+                stateMachine.ChangeState(player.FastMoveState);
+            }
+          
         }
     }
 

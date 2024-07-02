@@ -10,6 +10,7 @@ public class PlayerGroundedState : PlayerState
     private bool jumpInput;
     private bool rollInput;
     private bool grabInput;
+    protected bool fastMoveInput;
     //
 
     //Checks
@@ -69,6 +70,7 @@ public class PlayerGroundedState : PlayerState
         jumpInput = player.InputHandler.JumpInput;
         rollInput = player.InputHandler.RollInput;
         grabInput= player.InputHandler.GrabInput;
+        fastMoveInput= player.InputHandler.FastMoveInput;
 
         if (player.InputHandler.AttackInputs[(int)CombatInputs.primary])
         {

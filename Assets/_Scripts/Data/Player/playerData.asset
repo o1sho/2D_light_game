@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: playerData
   m_EditorClassIdentifier: 
   movementVelocity: 7
+  fastMovementVelocity: 10
   jumpVelocity: 11.1
   amountOfJumps: 1
   rollVelocity: 7

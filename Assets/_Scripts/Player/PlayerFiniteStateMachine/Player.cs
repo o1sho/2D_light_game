@@ -1,3 +1,4 @@
+using Oisho;
 using Oisho.CoreSystem;
 using Oisho.Weapons;
 using System.Collections;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     // Player States
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
+    public PlayerFastMoveState FastMoveState { get; private set; } //new
     public PlayerJumpState JumpState { get; private set; }
     public PlayerRollState RollState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
@@ -59,6 +61,7 @@ public class Player : MonoBehaviour
 
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
+        FastMoveState = new PlayerFastMoveState(this, StateMachine, playerData, "fastMove");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         RollState = new PlayerRollState(this, StateMachine, playerData, "roll");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
