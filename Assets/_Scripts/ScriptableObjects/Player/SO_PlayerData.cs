@@ -11,6 +11,7 @@ public class SO_PlayerData : ScriptableObject
 
     [Header("Jump State:")]
     public float jumpVelocity = 15f;
+    public float superJumpVelocity = 20f;
     public int amountOfJumps = 1;
 
     [Header("Roll State:")]

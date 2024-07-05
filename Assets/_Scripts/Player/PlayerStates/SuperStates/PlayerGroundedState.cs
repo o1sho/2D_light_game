@@ -1,3 +1,4 @@
+using Oisho;
 using Oisho.CoreSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -83,6 +84,12 @@ public class PlayerGroundedState : PlayerState
 
         else if (jumpInput && player.JumpState.CanJump())//
         {
+            if (jumpInput && player.JumpState.CanJump() && fastMoveInput && xInput != 0)
+            {
+                player.InputHandler.UseJumpInput();
+                stateMachine.ChangeState(player.SuperJumpState);
+                return;
+            }
             player.InputHandler.UseJumpInput();
             stateMachine.ChangeState(player.JumpState);
         } 

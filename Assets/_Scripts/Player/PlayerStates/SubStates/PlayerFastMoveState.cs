@@ -33,11 +33,16 @@ namespace Oisho
 
             Movement?.SetVelocityX(playerData.fastMovementVelocity * xInput);
 
+
             if (!isExitingState)
             {
                 if (xInput == 0)
                 {
                     stateMachine.ChangeState(player.IdleState);
+                }
+                else if (!fastMoveInput)
+                {
+                    stateMachine.ChangeState(player.MoveState);
                 }
             }
         }

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670aa309a1b65e9459d34767113b8e87, type: 3}
   m_Name: playerData
   m_EditorClassIdentifier: 
-  movementVelocity: 7
+  movementVelocity: 6
   fastMovementVelocity: 10
   jumpVelocity: 11.1
+  superJumpVelocity: 15
   amountOfJumps: 1
   rollVelocity: 7
   rollTime: 0.6

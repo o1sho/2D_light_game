@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public PlayerMoveState MoveState { get; private set; }
     public PlayerFastMoveState FastMoveState { get; private set; } //new
     public PlayerJumpState JumpState { get; private set; }
+    public PlayerSuperJumpState SuperJumpState { get; private set; } //new
     public PlayerRollState RollState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
     public PlayerLandState LandState { get; private set; }
@@ -63,6 +64,7 @@ public class Player : MonoBehaviour
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
         FastMoveState = new PlayerFastMoveState(this, StateMachine, playerData, "fastMove");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
+        SuperJumpState = new PlayerSuperJumpState(this, StateMachine, playerData, "inAir");
         RollState = new PlayerRollState(this, StateMachine, playerData, "roll");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
